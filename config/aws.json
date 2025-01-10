@@ -1,10 +1,4 @@
-import boto3
-import json
-import os
-from datetime import datetime
-
-# Define the AWS service configuration
-AWS_SERVICES = [
+[
     {
         "function": "describe_repositories",
         "result_key": "repositories",
@@ -78,45 +72,12 @@ AWS_SERVICES = [
         "result_key": "CacheClusters",
         "service": "elasticache",
         "fields": ["cacheClusterId", "engine", "cacheNodeType", "numCacheNodes", "status", "endpoint", "tags"]
+    },
+    {
+        "function": "list_containers",
+        "result_key": "ContainerList",
+        "service": "mediastore",
+        "fields": ["name", "arn", "creationTime", "status", "tags"]
     }
-]
-
-# Ensure the output directory exists
-OUTPUT_DIR = "data/json"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-def fetch_and_save_data():
-    """Fetch data from AWS services and save as JSON files."""
-    session = boto3.Session()
-
-    for service_config in AWS_SERVICES:
-        service_name = service_config["service"]
-        function_name = service_config["function"]
-        result_key = service_config["result_key"]
-        parameters = service_config.get("parameters", {})
-
-        # Initialize the service client
-        client = session.client(service_name)
-
-        # Dynamically call the AWS function
-        try:
-            response = getattr(client, function_name)(**parameters)
-            data = response.get(result_key, [])
-
-            # File path for output
-            output_file = os.path.join(OUTPUT_DIR, f"{service_name}-{function_name}.json")
-
-            # Notify if overwriting an existing file
-            if os.path.exists(output_file):
-                print(f"Overwriting existing file: {output_file}")
-
-            # Save data to a JSON file
-            with open(output_file, "w") as f:
-                json.dump(data, f, indent=4, default=str)
-
-            print(f"Data for {service_name} ({function_name}) saved to {output_file}")
-        except Exception as e:
-            print(f"Error fetching data from {service_name} ({function_name}): {e}")
-
-if __name__ == "__main__":
-    fetch_and_save_data()
+  ]
+  

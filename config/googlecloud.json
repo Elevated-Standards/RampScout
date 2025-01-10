@@ -1,0 +1,77 @@
+[
+    {
+        "function": "list_repositories",
+        "result_key": "repositories",
+        "service": "ArtifactRegistry",
+        "fields": ["name", "id", "format", "createTime", "labels"]
+    },
+    {
+        "function": "list_instances",
+        "parameters": {
+            "filter": "status = RUNNING"
+        },
+        "result_key": "instances",
+        "service": "ComputeEngine",
+        "fields": ["id", "name", "machineType", "zone", "status", "networkInterfaces", "tags"]
+    },
+    {
+        "function": "list_instances",
+        "result_key": "instances",
+        "service": "CloudSQL",
+        "fields": ["name", "instanceType", "databaseVersion", "region", "state", "createTime", "settings", "labels"]
+    },
+    {
+        "function": "list_buckets",
+        "result_key": "buckets",
+        "service": "Storage",
+        "fields": ["name", "id", "location", "storageClass", "createTime", "labels"]
+    },
+    {
+        "function": "list_clusters",
+        "result_key": "clusters",
+        "service": "KubernetesEngine",
+        "fields": ["name", "id", "status", "currentMasterVersion", "network", "labels"]
+    },
+    {
+        "function": "list_clusters",
+        "result_key": "clusters",
+        "service": "Dataflow",
+        "fields": ["name", "id", "state", "currentWorkers", "labels"]
+    },
+    {
+        "function": "list_crypto_keys",
+        "result_key": "cryptoKeys",
+        "service": "CloudKeyManagementService",
+        "fields": ["name", "purpose", "createTime", "state", "labels"]
+    },
+    {
+        "function": "list_load_balancers",
+        "result_key": "loadBalancers",
+        "service": "ComputeEngine",
+        "fields": ["name", "id", "type", "status", "region", "backendServices", "labels"]
+    },
+    {
+        "function": "list_functions",
+        "result_key": "functions",
+        "service": "CloudFunctions",
+        "fields": ["name", "id", "runtime", "entryPoint", "availableMemoryMb", "timeout", "updateTime", "labels"]
+    },
+    {
+        "function": "list_tables",
+        "result_key": "tables",
+        "service": "Bigtable",
+        "fields": ["name", "id", "clusterName", "creationTime", "columnFamilyCount", "labels"]
+    },
+    {
+        "function": "list_instances",
+        "result_key": "redisInstances",
+        "service": "CloudRedis",
+        "fields": ["name", "id", "tier", "memorySizeGb", "state", "host", "labels"]
+    },
+    {
+        "function": "list_containers",
+        "result_key": "containers",
+        "service": "MediaAssets",
+        "fields": ["name", "id", "createTime", "status", "labels"]
+    }
+]

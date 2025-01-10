@@ -1,0 +1,77 @@
+[
+    {
+        "function": "list_containers",
+        "result_key": "containers",
+        "service": "Azure.ContainerRegistry",
+        "fields": ["name", "id", "loginServer", "creationDate", "tags"]
+    },
+    {
+        "function": "list_virtual_machines",
+        "parameters": {
+            "filter": "powerState eq 'running'"
+        },
+        "result_key": "virtualMachines",
+        "service": "Azure.Compute",
+        "fields": ["id", "name", "type", "size", "provisioningState", "privateIpAddress", "publicIpAddress", "osProfile", "tags"]
+    },
+    {
+        "function": "list_sql_servers",
+        "result_key": "sqlServers",
+        "service": "Azure.SQL",
+        "fields": ["name", "id", "version", "fullyQualifiedDomainName", "state", "creationDate", "tags"]
+    },
+    {
+        "function": "list_storage_accounts",
+        "result_key": "storageAccounts",
+        "service": "Azure.Storage",
+        "fields": ["name", "id", "creationDate", "location", "tags"]
+    },
+    {
+        "function": "list_managed_clusters",
+        "result_key": "managedClusters",
+        "service": "Azure.KubernetesService",
+        "fields": ["name", "id", "provisioningState", "kubernetesVersion", "networkProfile", "tags"]
+    },
+    {
+        "function": "list_container_groups",
+        "result_key": "containerGroups",
+        "service": "Azure.ContainerInstance",
+        "fields": ["name", "id", "provisioningState", "containers", "tags"]
+    },
+    {
+        "function": "list_keys",
+        "result_key": "keys",
+        "service": "Azure.KeyVault",
+        "fields": ["id", "version", "attributes", "tags"]
+    },
+    {
+        "function": "list_load_balancers",
+        "result_key": "loadBalancers",
+        "service": "Azure.Network",
+        "fields": ["name", "id", "dnsName", "provisioningState", "frontendIpConfigurations", "tags"]
+    },
+    {
+        "function": "list_functions",
+        "result_key": "functions",
+        "service": "Azure.Functions",
+        "fields": ["name", "id", "language", "entryPoint", "memorySize", "timeout", "lastModified", "tags"]
+    },
+    {
+        "function": "list_tables",
+        "result_key": "tables",
+        "service": "Azure.TableStorage",
+        "fields": ["name", "id", "creationDate", "rowCount", "size", "tags"]
+    },
+    {
+        "function": "list_redis_caches",
+        "result_key": "redisCaches",
+        "service": "Azure.CacheForRedis",
+        "fields": ["name", "id", "sku", "capacity", "status", "hostName", "tags"]
+    },
+    {
+        "function": "list_media_services",
+        "result_key": "mediaServices",
+        "service": "Azure.MediaServices",
+        "fields": ["name", "id", "provisioningState", "tags"]
+    }
+]
