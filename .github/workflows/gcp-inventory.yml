@@ -56,8 +56,8 @@ jobs:
           run: |
             git config --local user.name "GitHub Actions"
             git config --local user.email "actions@github.com"
-            mkdir -p data/json
-            git add data/json
+            mkdir -p data/json/gcp
+            git add data/json/gcp
             git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
             git push origin HEAD:${{ github.ref }}
 
