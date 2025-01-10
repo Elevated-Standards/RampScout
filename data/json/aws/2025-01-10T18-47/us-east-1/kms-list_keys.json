@@ -1,0 +1,42 @@
+[
+    {
+        "KeyId": "fake-key-id-1",
+        "KeyArn": "arn:aws:kms:us-fake-1:123456789012:key/fake-key-id-1"
+    },
+    {
+        "KeyId": "fake-key-id-2",
+        "KeyArn": "arn:aws:kms:us-fake-2:123456789012:key/fake-key-id-2"
+    },
+    {
+        "KeyId": "fake-key-id-3",
+        "KeyArn": "arn:aws:kms:us-fake-3:123456789012:key/fake-key-id-3"
+    },
+    {
+        "KeyId": "fake-key-id-4",
+        "KeyArn": "arn:aws:kms:us-fake-4:123456789012:key/fake-key-id-4"
+    },
+    {
+        "KeyId": "fake-key-id-5",
+        "KeyArn": "arn:aws:kms:us-fake-5:123456789012:key/fake-key-id-5"
+    },
+    {
+        "KeyId": "fake-key-id-6",
+        "KeyArn": "arn:aws:kms:us-fake-6:123456789012:key/fake-key-id-6"
+    },
+    {
+        "KeyId": "fake-key-id-7",
+        "KeyArn": "arn:aws:kms:us-fake-7:123456789012:key/fake-key-id-7"
+    },
+    {
+        "KeyId": "fake-key-id-8",
+        "KeyArn": "arn:aws:kms:us-fake-8:123456789012:key/fake-key-id-8"
+    },
+    {
+        "KeyId": "fake-key-id-9",
+        "KeyArn": "arn:aws:kms:us-fake-9:123456789012:key/fake-key-id-9"
+    },
+    {
+        "KeyId": "fake-key-id-10",
+        "KeyArn": "arn:aws:kms:us-fake-10:123456789012:key/fake-key-id-10"
+    }
+]

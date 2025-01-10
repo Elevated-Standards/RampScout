@@ -1,0 +1,70 @@
+[
+    {
+        "FunctionName": "fake-function-name-1",
+        "FunctionArn": "arn:aws:lambda:us-fake-1:123456789012:function:fake-function-name-1",
+        "Runtime": "python3.9",
+        "Role": "arn:aws:iam::123456789012:role/fake-role-1",
+        "Handler": "lambda_function.fake_handler",
+        "CodeSize": 12345678,
+        "Description": "Fake function description",
+        "Timeout": 300,
+        "MemorySize": 256,
+        "LastModified": "2024-01-01T00:00:00.000+0000",
+        "CodeSha256": "fakehashhere1234567890abcdefg=",
+        "Version": "$LATEST",
+        "VpcConfig": {
+            "SubnetIds": ["subnet-fake1", "subnet-fake2", "subnet-fake3"],
+            "SecurityGroupIds": ["sg-fake1"],
+            "VpcId": "vpc-fake1",
+            "Ipv6AllowedForDualStack": false
+        },
+        "Environment": {
+            "Variables": {
+                "FAKE_ENV_VAR_1": "fake-value-1",
+                "FAKE_ENV_VAR_2": "fake-value-2"
+            }
+        },
+        "KMSKeyArn": "arn:aws:kms:us-fake-1:123456789012:key/fake-key-1",
+        "TracingConfig": {"Mode": "PassThrough"},
+        "RevisionId": "fake-revision-id-1",
+        "PackageType": "Zip",
+        "Architectures": ["x86_64"],
+        "EphemeralStorage": {"Size": 512},
+        "SnapStart": {"ApplyOn": "None", "OptimizationStatus": "Off"},
+        "LoggingConfig": {"LogFormat": "Text", "LogGroup": "/aws/lambda/fake-log-group-1"}
+    },
+    {
+        "FunctionName": "fake-function-name-2",
+        "FunctionArn": "arn:aws:lambda:us-fake-2:123456789012:function:fake-function-name-2",
+        "Runtime": "go1.x",
+        "Role": "arn:aws:iam::123456789012:role/fake-role-2",
+        "Handler": "fake_handler",
+        "CodeSize": 9876543,
+        "Description": "Another fake function description",
+        "Timeout": 600,
+        "MemorySize": 512,
+        "LastModified": "2024-01-02T00:00:00.000+0000",
+        "CodeSha256": "anotherfakehash1234567890abcdefg=",
+        "Version": "$LATEST",
+        "VpcConfig": {
+            "SubnetIds": ["subnet-fake4", "subnet-fake5", "subnet-fake6"],
+            "SecurityGroupIds": ["sg-fake2"],
+            "VpcId": "vpc-fake2",
+            "Ipv6AllowedForDualStack": false
+        },
+        "Environment": {
+            "Variables": {
+                "FAKE_ENV_VAR_3": "fake-value-3",
+                "FAKE_ENV_VAR_4": "fake-value-4"
+            }
+        },
+        "KMSKeyArn": "arn:aws:kms:us-fake-2:123456789012:key/fake-key-2",
+        "TracingConfig": {"Mode": "PassThrough"},
+        "RevisionId": "fake-revision-id-2",
+        "PackageType": "Zip",
+        "Architectures": ["x86_64"],
+        "EphemeralStorage": {"Size": 512},
+        "SnapStart": {"ApplyOn": "None", "OptimizationStatus": "Off"},
+        "LoggingConfig": {"LogFormat": "Text", "LogGroup": "/aws/lambda/fake-log-group-2"}
+    }
+]

@@ -1,0 +1,29 @@
+[
+    {
+        "DBInstanceIdentifier": "mQ36qGhaXU",
+        "DBInstanceClass": "db.t3.medium",
+        "Engine": "aurora-postgresql",
+        "DBInstanceStatus": "available",
+        "MasterUsername": "xf2XudeOY9",
+        "Endpoint": {
+            "Address": "LHxNAkUCdY.example.com",
+            "Port": 5432,
+            "HostedZoneId": "redacted"
+        },
+        "AllocatedStorage": 1,
+        "InstanceCreateTime": "2024-02-14T20:09:02.950000+00:00",
+        "PreferredBackupWindow": "03:01-03:31",
+        "BackupRetentionPeriod": 30,
+        "DBSecurityGroups": [],
+        "VpcSecurityGroups": [
+            {
+                "VpcSecurityGroupId": "jQZ3aDKqvU",
+                "Status": "active"
+            }
+        ],
+        "KmsKeyId": "arn:aws:kms:region:account:key/d99XdBlRSh8ew5DT0D3kTKEYUZYmA8pXY601",
+        "MonitoringRoleArn": "arn:aws:iam::account:role/pj5MMDT3Sj",
+        "DBInstanceArn": "arn:aws:rds:region:account:db:qsKbjq5TRv",
+        "PerformanceInsightsKMSKeyId": "arn:aws:kms:region:account:key/gTunHlFSwLXOSB5RNq47pqMFNh3zW5BGm7kl"
+    }
+]
