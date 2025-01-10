@@ -88,9 +88,10 @@ jobs:
               git clone https://github.com/aws-samples/aws-auto-inventory.git
               cd aws-auto-inventory
               pip install -r requirements.txt
-              python3 scan.py -s ../src/populations/aws/main.json -r us-east-1 --output_dir ../Inventory/output
+              TIMESTAMP=$(date +"%Y-%m-%dT%H-%M")
+              OUTPUT_DIR="../data/json/aws/${TIMESTAMP}/us-east-1"
+              python3 scan.py -s ../config/aws.json -r us-east-1 --output_dir $OUTPUT_DIR
               echo "Scan complete."
-            
 
     process-inventory:
         needs: aws-scan
