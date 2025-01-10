@@ -1,7 +1,6 @@
 # Ignore output files and directories
-output/
-data/json/
-*.xlsx
+#output/
+#data/json
 
 # Ignore Python cache files
 *.pyc
