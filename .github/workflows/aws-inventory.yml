@@ -35,33 +35,79 @@ jobs:
           with:
             python-version: '3.10'
 
-        # Step 5: Install System Dependencies
         - name: Install System Dependencies
           run: |
-                    sudo apt-get update
-                    sudo apt-get install -y python3-dev libatlas-base-dev gfortran libopenblas-dev liblapack-dev build-essential
-
-        # Step 6: Install Python Dependencies
-        - name: Install Dependencies
+              sudo apt-get update
+              sudo apt-get install -y python3-dev libatlas-base-dev gfortran libopenblas-dev liblapack-dev build-essential
+              python -m pip install --upgrade pip
+              pip install --only-binary=:all: numpy==1.24.4 pandas==2.1.0 boto3==1.28.34 openpyxl==3.1.2
+    
+        - name: Install AWS CLI
           run: |
-            python -m pip install --upgrade pip
-            pip install --only-binary=:all: numpy==1.24.4 pandas==2.1.0 boto3==1.28.34 openpyxl==3.1.2
+              sudo apt-get update
+              sudo apt-get install -y python3 python3-pip
+              pip install awscli --upgrade --user
+
+
+              - name: Add AWS CLI to PATH
+              run: |
+                echo "export PATH=\"$HOME/.local/bin:$PATH\"" >> $GITHUB_ENV
+      
+            # Step 4: Configure AWS CLI
+        - name: Configure AWS CLI
+          env:
+            AWS_ACCESS_KEY_ID:  ${{ secrets.DEVOPS_DOOP_AUTOMATION_AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.DEVOPS_DOOP_AUTOMATION_AWS_SECRET_ACCESS_KEY }}
+            AWS_DEFAULT_REGION: us-east-1
+          run: |
+                if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ] || [ -z "$AWS_DEFAULT_REGION" ]; then
+                  echo "AWS credentials or region are not set." >&2
+                  exit 1
+                fi
+                aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+                aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+                aws configure set region "$AWS_DEFAULT_REGION"
+
+
+        - name: Verify AWS CLI Configuration
+          env:
+            AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          run: |
+                if ! aws sts get-caller-identity; then
+                  echo "Failed to verify AWS credentials." >&2
+                  exit 1
+                fi
+
 
         # Step 7: Run AWS Auto Inventory
         - name: Run AWS Auto Inventory
           run: |
-                    python3 scan.py -s config/aws.json -r us-east-1
-                    echo "${{ env.CI_COMMIT_MESSAGE }}"
+              git clone https://github.com/aws-samples/aws-auto-inventory.git
+              cd aws-auto-inventory
+              pip install -r requirements.txt
+              python3 scan.py -s ../config/aws.json -r us-east-1
+              echo "${{ env.CI_COMMIT_MESSAGE }}"
 
         # Step 8: Commit and Push Results
         - name: Commit and Push Results
           run: |
-                    git config --local user.name "GitHub Actions"
-                    git config --local user.email "actions@github.com"
-                    mkdir -p data/json/aws
-                    git add data/json/aws
-                    git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
-                    git push origin HEAD:${{ github.ref }}
+              echo "aws-auto-inventory/" >> .gitignore
+              git config --local user.name "GitHub Actions"
+              git config --local user.email "actions@github.com"
+              mkdir -p data/json/aws
+              git add data/json/aws
+              git commit -m "${{ env.CI_COMMIT_MESSAGE }}" || echo "No changes to commit"
+              git push origin HEAD:${{ github.ref }}
+
+            
+        - name: Run AWS Auto Inventory
+          run: |
+              git clone https://github.com/aws-samples/aws-auto-inventory.git
+              cd aws-auto-inventory
+              pip install -r requirements.txt
+              python3 scan.py -s ../src/populations/aws/main.json -r us-east-1 --output_dir ../Inventory/output
+              echo "Scan complete."
+            
 
     process-inventory:
         needs: aws-scan
@@ -110,5 +156,6 @@ jobs:
                     git add output
                     git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
                     git push origin HEAD:${{ github.ref }}
+
 
 
