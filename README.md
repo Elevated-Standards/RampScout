@@ -4,6 +4,9 @@
 
 This project generates a FedRAMP-aligned inventory of assets in different cloud providers. Currently, it supports Amazon Web Services (AWS) and has placeholders for Microsoft Azure and Google Cloud Platform (GCP).
 
+Example OutPut: [2025-01-10-Inventory.xlsx](output/2025/Jan/2025-01-10-Inventory.xlsx)
+
+
 ## Supported Cloud Providers
 
 - [X] Amazon Web Services
