@@ -69,29 +69,23 @@ jobs:
               git clone https://github.com/aws-samples/aws-auto-inventory.git
               cd aws-auto-inventory
               pip install -r requirements.txt
-              python3 scan.py -s ../config/aws.json -r us-east-1
-              echo "${{ env.CI_COMMIT_MESSAGE }}"
-
-        - name: Commit and Push Results
-          run: |
-              echo "aws-auto-inventory/" >> .gitignore
-              git config --local user.name "GitHub Actions"
-              git config --local user.email "actions@github.com"
-              mkdir -p data/json/aws
-              git add data/json/aws
-              git commit -m "${{ env.CI_COMMIT_MESSAGE }}" || echo "No changes to commit"
-              git push origin HEAD:${{ github.ref }}
-
-            
-        - name: Run AWS Auto Inventory
-          run: |
-              git clone https://github.com/aws-samples/aws-auto-inventory.git
-              cd aws-auto-inventory
-              pip install -r requirements.txt
               TIMESTAMP=$(date +"%Y-%m-%dT%H-%M")
               OUTPUT_DIR="../data/json/aws/${TIMESTAMP}/us-east-1"
               python3 scan.py -s ../config/aws.json -r us-east-1 --output_dir $OUTPUT_DIR
               echo "Scan complete."
+
+#        - name: Commit and Push Results
+#          run: |
+#              echo "aws-auto-inventory/" >> .gitignore
+#              git config --local user.name "GitHub Actions"
+#              git config --local user.email "actions@github.com"
+#              mkdir -p data/json/aws
+#              git add data/json/aws
+#              git commit -m "${{ env.CI_COMMIT_MESSAGE }}" || echo "No changes to commit"
+#              git push origin HEAD:${{ github.ref }}
+
+           
+
 
     process-inventory:
         needs: aws-scan
