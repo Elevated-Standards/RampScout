@@ -26,7 +26,7 @@ jobs:
           run: |
               sudo apt-get update
               sudo apt-get install -y python3-dev libatlas-base-dev gfortran libopenblas-dev liblapack-dev build-essential
-              python3 pip install --upgrade pip
+              python pip install --upgrade pip
               pip install --only-binary=:all: numpy==1.24.4 pandas==2.1.0 boto3==1.28.34 openpyxl==3.1.2
     
         - name: Install AWS CLI
