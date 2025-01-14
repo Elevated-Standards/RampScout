@@ -7,6 +7,7 @@ This project generates a FedRAMP-aligned inventory of assets in different cloud 
 Example OutPut: [2025-01-10-Inventory.xlsx](output/2025/Jan/2025-01-10-Inventory.xlsx)
 
 
+
 ## Supported Cloud Providers
 
 - [X] Amazon Web Services
