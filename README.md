@@ -11,6 +11,8 @@ Example OutPut: [2025-01-10-Inventory.xlsx](output/2025/Jan/2025-01-10-Inventory
 ## Supported Cloud Providers
 
 - [X] Amazon Web Services
+  - [AWS Workflow YML](.github/workflows/aws-inventory.yml)
+  - [Github Action AWS Inventory Configuration](docs/aws-inventory.md)
 - [ ] Microsoft Azure
 - [ ] Google Cloud Platform
 
@@ -55,13 +57,7 @@ Example OutPut: [2025-01-10-Inventory.xlsx](output/2025/Jan/2025-01-10-Inventory
 - **Azure Configuration:** [azure.json]()
 - **GCP Configuration:** [googlecloud.json]()
 
-## GitHub Actions
 
-The project uses GitHub Actions to automate the inventory processing for each cloud provider. 
-
-- [ ] **AWS Workflow:** aws-inventory.yml - ALMOST COMPLETED
-- [ ] **Azure Workflow:** azure-inventory.yml
-- [ ] **GCP Workflow:** gcp-inventory.yml
 
 ## License
 
