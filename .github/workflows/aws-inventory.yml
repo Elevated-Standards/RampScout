@@ -45,6 +45,9 @@ jobs:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AUTOMATION_AWS_SECRET_ACCESS_KEY }}
             AWS_DEFAULT_REGION: us-east-1  # Hardcoded region for testing
           run: |
+            echo "AWS_ACCESS_KEY_ID is set"
+            echo "AWS_SECRET_ACCESS_KEY is set"
+            echo "AWS_DEFAULT_REGION is $AWS_DEFAULT_REGION"
             if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ] || [ -z "$AWS_DEFAULT_REGION" ]; then
               echo "AWS credentials or region are not set." >&2
               exit 1
