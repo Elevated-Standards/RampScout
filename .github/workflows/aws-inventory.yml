@@ -52,14 +52,14 @@ jobs:
             aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
             aws configure set region "$AWS_DEFAULT_REGION"
         
-#        - name: Verify AWS CLI Configuration
-#          env:
-#            AWS_REGION: us-east-1  # Hardcoded region for testing
-#          run: |
-#            if ! aws sts get-caller-identity; then
-#              echo "Failed to verify AWS credentials." >&2
-#              exit 1
-#            fi
+        - name: Verify AWS CLI Configuration
+          env:
+            AWS_REGION: us-east-1  # Hardcoded region for testing
+          run: |
+            if ! aws sts get-caller-identity; then
+              echo "Failed to verify AWS credentials." >&2
+              exit 1
+            fi
 
         - name: Run AWS Auto Inventory
           run: |
@@ -71,15 +71,15 @@ jobs:
               python3 scan.py -s ../config/aws.json -r us-east-1 --output_dir $OUTPUT_DIR
               echo "Scan complete."
 
-#        - name: Commit and Push Results
-#          run: |
-#              echo "aws-auto-inventory/" >> .gitignore
-#              git config --local user.name "GitHub Actions"
-#              git config --local user.email "actions@github.com"
-#              mkdir -p data/json/aws
-#              git add data/json/aws
-#              git commit -m "${{ env.CI_COMMIT_MESSAGE }}" || echo "No changes to commit"
-#              git push origin HEAD:${{ github.ref }}
+        - name: Commit and Push Results
+          run: |
+              echo "aws-auto-inventory/" >> .gitignore
+              git config --local user.name "GitHub Actions"
+              git config --local user.email "actions@github.com"
+              mkdir -p data/json/aws
+              git add data/json/aws
+              git commit -m "${{ env.CI_COMMIT_MESSAGE }}" || echo "No changes to commit"
+              git push origin HEAD:${{ github.ref }}
 
            
 
