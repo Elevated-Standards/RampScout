@@ -41,27 +41,26 @@ jobs:
       
         - name: Configure AWS CLI
           env:
-            AWS_ACCESS_KEY_ID:  ${{ secrets.AUTOMATION_AWS_ACCESS_KEY_ID }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AUTOMATION_AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AUTOMATION_AWS_SECRET_ACCESS_KEY }}
-            AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+            AWS_DEFAULT_REGION: us-east-1  # Hardcoded region for testing
           run: |
-                if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ] || [ -z "$AWS_DEFAULT_REGION" ]; then
-                  echo "AWS credentials or region are not set." >&2
-                  exit 1
-                fi
-                aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
-                aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
-                aws configure set region "$AWS_DEFAULT_REGION"
-
-
+            if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ] || [ -z "$AWS_DEFAULT_REGION" ]; then
+              echo "AWS credentials or region are not set." >&2
+              exit 1
+            fi
+            aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+            aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+            aws configure set region "$AWS_DEFAULT_REGION"
+        
         - name: Verify AWS CLI Configuration
           env:
-            AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+            AWS_REGION: us-east-1  # Hardcoded region for testing
           run: |
-                if ! aws sts get-caller-identity; then
-                  echo "Failed to verify AWS credentials." >&2
-                  exit 1
-                fi
+            if ! aws sts get-caller-identity; then
+              echo "Failed to verify AWS credentials." >&2
+              exit 1
+            fi
 
         - name: Run AWS Auto Inventory
           run: |
