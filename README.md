@@ -1,4 +1,6 @@
-# Cloud Asset Inventory Generator
+# RampScout
+
+> Cloud Asset Inventory Generator
 
 ## Purpose
 
