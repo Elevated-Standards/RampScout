@@ -11,6 +11,7 @@ jobs:
             pull-requests: write
         env: 
          CI_COMMIT_MESSAGE: Fetched AWS Assets
+         AWS_REGION: us-east-1  # Set default AWS region
 
         steps:
         # Step 1: Checkout the repository
@@ -30,31 +31,15 @@ jobs:
               python3 -m pip install --upgrade pip
               pip install numpy==1.24.4 pandas==2.1.0 boto3 openpyxl==3.1.2 awscli
               
-
-        - name: Add AWS CLI to PATH
-          run: |
-              echo "export PATH=\"$HOME/.local/bin:$PATH\"" >> $GITHUB_ENV
+        # Use AWS OIDC credentials
+        - name: Configure AWS credentials with OIDC
+          uses: aws-actions/configure-aws-credentials@v3
+          with:
+            role-to-assume: arn:aws:iam::145023120730:role/elevated-standards
+            role-session-name: evidencecollection
+            aws-region: ${{ env.AWS_REGION }}
       
-        - name: Configure AWS CLI
-          env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.AUTOMATION_AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AUTOMATION_AWS_SECRET_ACCESS_KEY }}
-            AWS_DEFAULT_REGION: us-east-1  # Hardcoded region for testing
-          run: |
-            echo "AWS_ACCESS_KEY_ID is set"
-            echo "AWS_SECRET_ACCESS_KEY is set"
-            echo "AWS_DEFAULT_REGION is $AWS_DEFAULT_REGION"
-            if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ] || [ -z "$AWS_DEFAULT_REGION" ]; then
-              echo "AWS credentials or region are not set." >&2
-              exit 1
-            fi
-            aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
-            aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
-            aws configure set region "$AWS_DEFAULT_REGION"
-        
         - name: Verify AWS CLI Configuration
-          env:
-            AWS_REGION: us-east-1  # Hardcoded region for testing
           run: |
             if ! aws sts get-caller-identity; then
               echo "Failed to verify AWS credentials." >&2
@@ -68,7 +53,7 @@ jobs:
               pip install -r requirements.txt
               TIMESTAMP=$(date +"%Y-%m-%dT%H-%M")
               OUTPUT_DIR="../data/json/aws/${TIMESTAMP}/us-east-1"
-              python3 scan.py -s ../config/aws.json -r us-east-1 --output_dir $OUTPUT_DIR
+              python3 scan.py -s ../config/aws.json -r ${{ env.AWS_REGION }} --output_dir $OUTPUT_DIR
               echo "Scan complete."
 
         - name: Commit and Push Results
@@ -80,9 +65,6 @@ jobs:
               git add data/json/aws
               git commit -m "${{ env.CI_COMMIT_MESSAGE }}" || echo "No changes to commit"
               git push origin HEAD:${{ github.ref }}
-
-           
-
 
     process-inventory:
         needs: aws-scan
@@ -131,6 +113,3 @@ jobs:
                     git add output
                     git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
                     git push origin HEAD:${{ github.ref }}
-
-
-
