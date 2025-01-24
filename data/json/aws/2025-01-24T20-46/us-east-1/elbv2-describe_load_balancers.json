@@ -1,0 +1,100 @@
+[
+    {
+        "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-fake-1:123456789012:loadbalancer/net/fake-loadbalancer-1",
+        "DNSName": "fake-loadbalancer-1.fake-region.elb.amazonaws.com",
+        "CanonicalHostedZoneId": "FAKEZONE123",
+        "CreatedTime": "2024-01-01T00:00:00.000000+00:00",
+        "LoadBalancerName": "fake-loadbalancer-1",
+        "Scheme": "internal",
+        "VpcId": "vpc-fake-1",
+        "State": {
+            "Code": "active"
+        },
+        "Type": "network",
+        "AvailabilityZones": [
+            {
+                "ZoneName": "fake-region-1a",
+                "SubnetId": "subnet-fake-1a",
+                "LoadBalancerAddresses": []
+            },
+            {
+                "ZoneName": "fake-region-1b",
+                "SubnetId": "subnet-fake-1b",
+                "LoadBalancerAddresses": []
+            },
+            {
+                "ZoneName": "fake-region-1c",
+                "SubnetId": "subnet-fake-1c",
+                "LoadBalancerAddresses": []
+            }
+        ],
+        "IpAddressType": "ipv4",
+        "EnablePrefixForIpv6SourceNat": "off"
+    },
+    {
+        "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-fake-1:123456789012:loadbalancer/app/fake-loadbalancer-2",
+        "DNSName": "fake-loadbalancer-2.fake-region.elb.amazonaws.com",
+        "CanonicalHostedZoneId": "FAKEZONE456",
+        "CreatedTime": "2024-01-02T00:00:00.000000+00:00",
+        "LoadBalancerName": "fake-loadbalancer-2",
+        "Scheme": "internet-facing",
+        "VpcId": "vpc-fake-2",
+        "State": {
+            "Code": "active"
+        },
+        "Type": "application",
+        "AvailabilityZones": [
+            {
+                "ZoneName": "fake-region-1a",
+                "SubnetId": "subnet-fake-2a",
+                "LoadBalancerAddresses": []
+            },
+            {
+                "ZoneName": "fake-region-1b",
+                "SubnetId": "subnet-fake-2b",
+                "LoadBalancerAddresses": []
+            },
+            {
+                "ZoneName": "fake-region-1c",
+                "SubnetId": "subnet-fake-2c",
+                "LoadBalancerAddresses": []
+            }
+        ],
+        "SecurityGroups": ["sg-fake-1"],
+        "IpAddressType": "ipv4",
+        "EnablePrefixForIpv6SourceNat": "off"
+    },
+    {
+        "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-fake-1:123456789012:loadbalancer/app/fake-loadbalancer-3",
+        "DNSName": "fake-loadbalancer-3.fake-region.elb.amazonaws.com",
+        "CanonicalHostedZoneId": "FAKEZONE789",
+        "CreatedTime": "2024-01-03T00:00:00.000000+00:00",
+        "LoadBalancerName": "fake-loadbalancer-3",
+        "Scheme": "internal",
+        "VpcId": "vpc-fake-3",
+        "State": {
+            "Code": "active"
+        },
+        "Type": "application",
+        "AvailabilityZones": [
+            {
+                "ZoneName": "fake-region-1a",
+                "SubnetId": "subnet-fake-3a",
+                "LoadBalancerAddresses": []
+            },
+            {
+                "ZoneName": "fake-region-1b",
+                "SubnetId": "subnet-fake-3b",
+                "LoadBalancerAddresses": []
+            },
+            {
+                "ZoneName": "fake-region-1c",
+                "SubnetId": "subnet-fake-3c",
+                "LoadBalancerAddresses": []
+            }
+        ],
+        "SecurityGroups": ["sg-fake-2"],
+        "IpAddressType": "ipv4",
+        "EnablePrefixForIpv6SourceNat": "off"
+    }
+]
