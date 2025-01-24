@@ -1,0 +1,38 @@
+2025-01-24 20:46:28,772 - __main__ - INFO - Started processing for region: us-east-1
+2025-01-24 20:46:28,773 - __main__ - INFO - Getting data on service ecr with function describe_repositories in region us-east-1
+2025-01-24 20:46:28,773 - __main__ - INFO - Getting data on service ec2 with function describe_instances in region us-east-1
+2025-01-24 20:46:28,774 - __main__ - INFO - Getting data on service rds with function describe_db_instances in region us-east-1
+2025-01-24 20:46:28,774 - __main__ - INFO - Getting data on service s3 with function list_buckets in region us-east-1
+2025-01-24 20:46:28,775 - __main__ - INFO - Getting data on service eks with function list_clusters in region us-east-1
+2025-01-24 20:46:28,776 - __main__ - INFO - Getting data on service ecs with function list_clusters in region us-east-1
+2025-01-24 20:46:29,187 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,188 - __main__ - INFO - Getting data on service kms with function list_keys in region us-east-1
+2025-01-24 20:46:29,189 - __main__ - INFO - No data found for service: eks
+2025-01-24 20:46:29,208 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,210 - __main__ - INFO - Getting data on service elbv2 with function describe_load_balancers in region us-east-1
+2025-01-24 20:46:29,210 - __main__ - INFO - Successfully processed service: s3
+2025-01-24 20:46:29,249 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,250 - __main__ - INFO - Getting data on service lambda with function list_functions in region us-east-1
+2025-01-24 20:46:29,250 - __main__ - INFO - No data found for service: ecs
+2025-01-24 20:46:29,275 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,277 - __main__ - INFO - Getting data on service dynamodb with function list_tables in region us-east-1
+2025-01-24 20:46:29,277 - __main__ - INFO - No data found for service: rds
+2025-01-24 20:46:29,278 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,283 - __main__ - INFO - Getting data on service elasticache with function describe_cache_clusters in region us-east-1
+2025-01-24 20:46:29,284 - __main__ - INFO - No data found for service: ecr
+2025-01-24 20:46:29,400 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,401 - __main__ - INFO - Getting data on service mediastore with function list_containers in region us-east-1
+2025-01-24 20:46:29,402 - __main__ - INFO - No data found for service: ec2
+2025-01-24 20:46:29,474 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,475 - __main__ - INFO - No data found for service: kms
+2025-01-24 20:46:29,576 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,577 - __main__ - INFO - No data found for service: lambda
+2025-01-24 20:46:29,611 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,612 - __main__ - INFO - No data found for service: dynamodb
+2025-01-24 20:46:29,617 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,618 - __main__ - INFO - No data found for service: elbv2
+2025-01-24 20:46:29,682 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:29,684 - __main__ - INFO - No data found for service: mediastore
+2025-01-24 20:46:30,727 - __main__ - INFO - Finished: AWS Get Service Data
+2025-01-24 20:46:30,728 - __main__ - INFO - No data found for service: elasticache
+2025-01-24 20:46:30,730 - __main__ - INFO - Finished processing for region: us-east-1
