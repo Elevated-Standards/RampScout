@@ -51,19 +51,22 @@ jobs:
         git clone https://github.com/aws-samples/aws-auto-inventory.git
         cd aws-auto-inventory
         pip install -r requirements.txt
+        YEAR=$(date +"%Y")
+        MONTH=$(date +"%B")
         TIMESTAMP=$(date +"%Y-%m-%dT%H-%M")
-        OUTPUT_DIR="../data/json/aws/${TIMESTAMP}/us-east-1"
+        OUTPUT_DIR="../data/json/aws/${TIMESTAMP}"
         python3 scan.py -s ../config/aws.json -r ${{ env.AWS_REGION }} --output_dir $OUTPUT_DIR
 
-    - name: Commit and Push Results
-      run: |
-        echo "aws-auto-inventory/" >> .gitignore
-        git config --local user.name "GitHub Actions"
-        git config --local user.email "actions@github.com"
-        mkdir -p data/json/aws
-        git add data/json/aws
-        git commit -m "${{ env.CI_COMMIT_MESSAGE }}" || echo "No changes to commit"
-        git push origin HEAD:${{ github.ref }}
+
+#    - name: Commit and Push Results
+#      run: |
+#        echo "aws-auto-inventory/" >> .gitignore
+#        git config --local user.name "GitHub Actions"
+#        git config --local user.email "actions@github.com"
+#        mkdir -p data/json/aws
+#        git add data/json/aws
+#        git commit -m "${{ env.CI_COMMIT_MESSAGE }}" || echo "No changes to commit"
+#        git push origin HEAD:${{ github.ref }}
 
   process-inventory:
     needs: aws-scan
@@ -100,7 +103,7 @@ jobs:
       # Step 5: Run Inventory Processing
       - name: Run Inventory Processing
         run: |
-          python3 main.py
+          python3 src/main.py
           echo "${{ env.CI_COMMIT_MESSAGE }}"
 
       # Step 6: Commit and Push Results
