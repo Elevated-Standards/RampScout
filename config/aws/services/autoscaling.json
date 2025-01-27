@@ -1,0 +1,35 @@
+{
+    "service": "autoscaling",
+    "function": "describe_auto_scaling_groups",
+    "fields": {
+        "AutoScalingGroups": {
+            "fields": [
+                "AutoScalingGroupName",
+                "AutoScalingGroupARN",
+                "LaunchConfigurationName",
+                "MinSize",
+                "MaxSize",
+                "DesiredCapacity",
+                "Instances",
+                "VPCZoneIdentifier",
+                "Tags"
+            ],
+            "subresources": {
+                "LaunchConfigurations": {
+                    "function": "describe_launch_configurations",
+                    "relation_field": "LaunchConfigurationName",
+                    "fields": [
+                        "LaunchConfigurationName",
+                        "LaunchConfigurationARN",
+                        "InstanceType",
+                        "KeyName",
+                        "SecurityGroups",
+                        "UserData",
+                        "ImageId",
+                        "CreatedTime"
+                    ]
+                }
+            }
+        }
+    }
+}

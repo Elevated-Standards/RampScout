@@ -1,0 +1,165 @@
+{
+    "service": "iam",
+    "function": "list_users",
+    "fields": {
+        "Users": {
+            "fields": [
+                "UserId",
+                "UserName",
+                "Arn",
+                "CreateDate",
+                "PasswordLastUsed",
+                "Tags"
+            ],
+            "subresources": {
+                "AccessKeys": {
+                    "function": "list_access_keys",
+                    "relation_field": "UserName",
+                    "fields": [
+                        "AccessKeyId",
+                        "Status",
+                        "CreateDate"
+                    ],
+                    "subresources": {
+                        "AccessKeyDetails": {
+                            "function": "get_access_key_last_used",
+                            "relation_field": "AccessKeyId",
+                            "fields": [
+                                "AccessKeyId",
+                                "LastUsedDate",
+                                "Region",
+                                "ServiceName"
+                            ],
+                            "detail_functions": {
+                                "AccessKey": {
+                                    "permissions": "GetAccessKeyLastUsed",
+                                    "item_search_id": "AccessKeyId",
+                                    "detail_function": "get_access_key_last_used",
+                                    "detail_param": "AccessKeyId"
+                                }
+                            }
+                        }
+                    }
+                },
+                "Groups": {
+                    "function": "list_groups_for_user",
+                    "relation_field": "UserName",
+                    "fields": [
+                        "GroupId",
+                        "GroupName",
+                        "Arn",
+                        "CreateDate"
+                    ]
+                },
+                "Policies": {
+                    "function": "list_attached_user_policies",
+                    "relation_field": "UserName",
+                    "fields": [
+                        "PolicyName",
+                        "PolicyArn"
+                    ],
+                    "subresources": {
+                        "PolicyDetails": {
+                            "function": "get_policy",
+                            "relation_field": "PolicyArn",
+                            "fields": [
+                                "PolicyArn",
+                                "PolicyName",
+                                "DefaultVersionId",
+                                "AttachmentCount",
+                                "IsAttachable",
+                                "CreateDate",
+                                "UpdateDate"
+                            ],
+                            "detail_functions": {
+                                "Policy": {
+                                    "permissions": "GetPolicy",
+                                    "item_search_id": "PolicyArn",
+                                    "detail_function": "get_policy",
+                                    "detail_param": "PolicyArn"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Roles": {
+            "function": "list_roles",
+            "fields": [
+                "RoleId",
+                "RoleName",
+                "Arn",
+                "CreateDate",
+                "Description",
+                "AssumeRolePolicyDocument",
+                "Tags"
+            ],
+            "subresources": {
+                "Policies": {
+                    "function": "list_attached_role_policies",
+                    "relation_field": "RoleName",
+                    "fields": [
+                        "PolicyName",
+                        "PolicyArn"
+                    ]
+                },
+                "InlinePolicies": {
+                    "function": "list_role_policies",
+                    "relation_field": "RoleName",
+                    "fields": [
+                        "PolicyName"
+                    ],
+                    "subresources": {
+                        "InlinePolicyDetails": {
+                            "function": "get_role_policy",
+                            "relation_field": "PolicyName",
+                            "fields": [
+                                "PolicyName",
+                                "PolicyDocument"
+                            ],
+                            "detail_functions": {
+                                "InlinePolicy": {
+                                    "permissions": "GetRolePolicy",
+                                    "item_search_id": "PolicyName",
+                                    "detail_function": "get_role_policy",
+                                    "detail_param": "PolicyName"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Groups": {
+            "function": "list_groups",
+            "fields": [
+                "GroupId",
+                "GroupName",
+                "Arn",
+                "CreateDate",
+                "Tags"
+            ],
+            "subresources": {
+                "Users": {
+                    "function": "get_group",
+                    "relation_field": "GroupName",
+                    "fields": [
+                        "UserName",
+                        "UserId",
+                        "Arn",
+                        "CreateDate"
+                    ]
+                },
+                "Policies": {
+                    "function": "list_attached_group_policies",
+                    "relation_field": "GroupName",
+                    "fields": [
+                        "PolicyName",
+                        "PolicyArn"
+                    ]
+                }
+            }
+        }
+    }
+}

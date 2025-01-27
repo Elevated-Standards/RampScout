@@ -1,0 +1,68 @@
+{
+    "service": "elbv2",
+    "function": "describe_load_balancers",
+    "fields": {
+        "LoadBalancers": {
+            "fields": [
+                "LoadBalancerArn",
+                "LoadBalancerName",
+                "DNSName",
+                "CanonicalHostedZoneId",
+                "CreatedTime",
+                "LoadBalancerType",
+                "Scheme",
+                "VpcId",
+                "State",
+                "SecurityGroups",
+                "Tags"
+            ],
+            "subresources": {
+                "Listeners": {
+                    "function": "describe_listeners",
+                    "relation_field": "LoadBalancerArn",
+                    "fields": [
+                        "ListenerArn",
+                        "Port",
+                        "Protocol",
+                        "SslPolicy",
+                        "Certificates",
+                        "DefaultActions"
+                    ]
+                },
+                "TargetGroups": {
+                    "function": "describe_target_groups",
+                    "relation_field": "LoadBalancerArn",
+                    "fields": [
+                        "TargetGroupArn",
+                        "TargetGroupName",
+                        "Protocol",
+                        "Port",
+                        "VpcId",
+                        "HealthCheckProtocol",
+                        "HealthCheckPort",
+                        "HealthCheckPath",
+                        "HealthCheckIntervalSeconds",
+                        "HealthCheckTimeoutSeconds",
+                        "HealthyThresholdCount",
+                        "UnhealthyThresholdCount",
+                        "Matcher",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "Targets": {
+                            "function": "describe_target_health",
+                            "relation_field": "TargetGroupArn",
+                            "fields": [
+                                "Target.Id",
+                                "Target.Port",
+                                "TargetHealth.State",
+                                "TargetHealth.Description",
+                                "TargetHealth.Reason"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

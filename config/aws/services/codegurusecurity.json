@@ -1,0 +1,97 @@
+[
+    {
+        "service": "codegurusecurity",
+        "function": "list_scan_summaries",
+        "fields": {
+            "ScanSummaries": {
+                "fields": [
+                    "ScanName",
+                    "ScanArn",
+                    "Status",
+                    "AnalysisType",
+                    "RunId",
+                    "CreatedAt",
+                    "UpdatedAt",
+                    "RepositoryName",
+                    "SourceCodeType",
+                    "Tags"
+                ],
+                "subresources": {
+                    "ScanDetails": {
+                        "function": "get_scan",
+                        "relation_field": "ScanArn",
+                        "fields": [
+                            "ScanName",
+                            "ScanArn",
+                            "Status",
+                            "AnalysisType",
+                            "RunId",
+                            "RepositoryName",
+                            "SourceCodeType",
+                            "FindingsCount",
+                            "Metrics",
+                            "CreatedAt",
+                            "UpdatedAt",
+                            "Tags"
+                        ],
+                        "detail_functions": {
+                            "Scan": {
+                                "permissions": "GetScan",
+                                "item_search_id": "ScanArn",
+                                "detail_function": "get_scan",
+                                "detail_param": "ScanArn"
+                            }
+                        }
+                    },
+                    "Findings": {
+                        "function": "list_findings",
+                        "relation_field": "ScanArn",
+                        "fields": [
+                            "FindingId",
+                            "Title",
+                            "Description",
+                            "Severity",
+                            "Status",
+                            "FilePath",
+                            "LineNumber",
+                            "Recommendation",
+                            "CreatedAt",
+                            "UpdatedAt",
+                            "Tags"
+                        ],
+                        "subresources": {
+                            "FindingDetails": {
+                                "function": "get_finding",
+                                "relation_field": "FindingId",
+                                "fields": [
+                                    "FindingId",
+                                    "Title",
+                                    "Description",
+                                    "Severity",
+                                    "Status",
+                                    "Recommendation",
+                                    "FilePath",
+                                    "LineNumber",
+                                    "Remediation",
+                                    "CreatedAt",
+                                    "UpdatedAt",
+                                    "Tags"
+                                ],
+                                "detail_functions": {
+                                    "Finding": {
+                                        "permissions": "GetFinding",
+                                        "item_search_id": "FindingId",
+                                        "detail_function": "get_finding",
+                                        "detail_param": "FindingId"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+
+]

@@ -1,0 +1,82 @@
+{
+    "service": "emr-containers",
+    "function": "list_virtual_clusters",
+    "fields": {
+        "VirtualClusters": {
+            "fields": [
+                "Id",
+                "Name",
+                "Arn",
+                "State",
+                "CreatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "VirtualClusterDetails": {
+                    "function": "describe_virtual_cluster",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Name",
+                        "Arn",
+                        "State",
+                        "CreatedAt",
+                        "ContainerProvider",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "VirtualCluster": {
+                            "permissions": "DescribeVirtualCluster",
+                            "item_search_id": "Id",
+                            "detail_function": "describe_virtual_cluster",
+                            "detail_param": "Id"
+                        }
+                    }
+                },
+                "JobRuns": {
+                    "function": "list_job_runs",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Name",
+                        "VirtualClusterId",
+                        "State",
+                        "CreatedAt",
+                        "StartedAt",
+                        "FinishedAt",
+                        "ExecutionRoleArn",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "JobRunDetails": {
+                            "function": "describe_job_run",
+                            "relation_field": "Id",
+                            "fields": [
+                                "Id",
+                                "Name",
+                                "VirtualClusterId",
+                                "State",
+                                "CreatedAt",
+                                "StartedAt",
+                                "FinishedAt",
+                                "ExecutionRoleArn",
+                                "ReleaseLabel",
+                                "ConfigurationOverrides",
+                                "JobDriver",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "JobRun": {
+                                    "permissions": "DescribeJobRun",
+                                    "item_search_id": "Id",
+                                    "detail_function": "describe_job_run",
+                                    "detail_param": "Id"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

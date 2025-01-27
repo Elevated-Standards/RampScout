@@ -1,0 +1,71 @@
+{
+    "service": "organizations",
+    "function": "list_accounts",
+    "fields": {
+        "Accounts": {
+            "fields": [
+                "Id",
+                "Arn",
+                "Email",
+                "Name",
+                "Status",
+                "JoinedMethod",
+                "JoinedTimestamp",
+                "Tags"
+            ],
+            "subresources": {
+                "AccountDetails": {
+                    "function": "describe_account",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Arn",
+                        "Email",
+                        "Name",
+                        "Status",
+                        "JoinedMethod",
+                        "JoinedTimestamp",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Account": {
+                            "permissions": "DescribeAccount",
+                            "item_search_id": "AccountId",
+                            "detail_function": "describe_account",
+                            "detail_param": "AccountId"
+                        }
+                    }
+                }
+            }
+        },
+        "OrganizationalUnits": {
+            "function": "list_organizational_units_for_parent",
+            "fields": [
+                "Id",
+                "Arn",
+                "Name",
+                "Tags"
+            ],
+            "subresources": {
+                "OrganizationalUnitDetails": {
+                    "function": "describe_organizational_unit",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Arn",
+                        "Name",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "OrganizationalUnit": {
+                            "permissions": "DescribeOrganizationalUnit",
+                            "item_search_id": "OrganizationalUnitId",
+                            "detail_function": "describe_organizational_unit",
+                            "detail_param": "OrganizationalUnitId"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

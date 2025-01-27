@@ -1,0 +1,109 @@
+{
+    "service": "backup",
+    "function": "list_backup_vaults",
+    "fields": {
+        "BackupVaults": {
+            "fields": [
+                "BackupVaultName",
+                "BackupVaultArn",
+                "CreationDate",
+                "EncryptionKeyArn",
+                "NumberOfRecoveryPoints",
+                "Tags"
+            ],
+            "subresources": {
+                "VaultDetails": {
+                    "function": "describe_backup_vault",
+                    "relation_field": "BackupVaultName",
+                    "fields": [
+                        "BackupVaultName",
+                        "BackupVaultArn",
+                        "EncryptionKeyArn",
+                        "CreationDate",
+                        "NumberOfRecoveryPoints",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Vault": {
+                            "permissions": "DescribeBackupVault",
+                            "item_search_id": "BackupVaultName",
+                            "detail_function": "describe_backup_vault",
+                            "detail_param": "BackupVaultName"
+                        }
+                    }
+                },
+                "RecoveryPoints": {
+                    "function": "list_recovery_points_by_backup_vault",
+                    "relation_field": "BackupVaultName",
+                    "fields": [
+                        "RecoveryPointArn",
+                        "Status",
+                        "CreationDate",
+                        "CompletionDate",
+                        "BackupSizeInBytes",
+                        "ResourceArn",
+                        "ResourceType",
+                        "EncryptionKeyArn",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "RecoveryPointDetails": {
+                            "function": "describe_recovery_point",
+                            "relation_field": "RecoveryPointArn",
+                            "fields": [
+                                "RecoveryPointArn",
+                                "Status",
+                                "CreationDate",
+                                "CompletionDate",
+                                "BackupSizeInBytes",
+                                "ResourceArn",
+                                "ResourceType",
+                                "EncryptionKeyArn",
+                                "Lifecycle",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "RecoveryPoint": {
+                                    "permissions": "DescribeRecoveryPoint",
+                                    "item_search_id": "RecoveryPointArn",
+                                    "detail_function": "describe_recovery_point",
+                                    "detail_param": "RecoveryPointArn"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "BackupJobs": {
+            "function": "list_backup_jobs",
+            "fields": [
+                "BackupJobId",
+                "BackupVaultName",
+                "RecoveryPointArn",
+                "Status",
+                "StartBy",
+                "CreationDate",
+                "CompletionDate",
+                "BackupSizeInBytes",
+                "ResourceArn",
+                "ResourceType",
+                "Tags"
+            ]
+        },
+        "RestoreJobs": {
+            "function": "list_restore_jobs",
+            "fields": [
+                "RestoreJobId",
+                "RecoveryPointArn",
+                "Status",
+                "CreationDate",
+                "CompletionDate",
+                "BackupSizeInBytes",
+                "ResourceArn",
+                "ResourceType",
+                "Tags"
+            ]
+        }
+    }
+}

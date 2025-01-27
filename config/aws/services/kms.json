@@ -1,0 +1,29 @@
+{
+    "service": "kms",
+    "function": "list_keys",
+    "fields": {
+        "Keys": {
+            "fields": [
+                "KeyId",
+                "KeyArn"
+            ],
+            "subresources": {
+                "KeyPolicies": {
+                    "function": "get_key_policy",
+                    "relation_field": "KeyId",
+                    "fields": [
+                        "Policy"
+                    ],
+                    "detail_functions": {
+                        "KeyPolicy": {
+                            "permissions": "GetKeyPolicy",
+                            "item_search_id": "KeyId",
+                            "detail_function": "get_key_policy",
+                            "detail_param": "KeyId"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

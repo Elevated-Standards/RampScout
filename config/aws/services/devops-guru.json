@@ -1,0 +1,112 @@
+{
+    "service": "devopsguru",
+    "function": "list_insights",
+    "fields": {
+        "Insights": {
+            "fields": [
+                "Id",
+                "Name",
+                "Status",
+                "Severity",
+                "StartTime",
+                "EndTime",
+                "ServiceCollection",
+                "ResourceCollection",
+                "Tags"
+            ],
+            "subresources": {
+                "InsightDetails": {
+                    "function": "describe_insight",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Name",
+                        "Status",
+                        "Severity",
+                        "ServiceCollection",
+                        "ResourceCollection",
+                        "Recommendations",
+                        "StartTime",
+                        "EndTime",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Insight": {
+                            "permissions": "DescribeInsight",
+                            "item_search_id": "Id",
+                            "detail_function": "describe_insight",
+                            "detail_param": "InsightId"
+                        }
+                    }
+                },
+                "Recommendations": {
+                    "function": "list_recommendations",
+                    "relation_field": "Id",
+                    "fields": [
+                        "RecommendationId",
+                        "Description",
+                        "RecommendationType",
+                        "RelatedEvents",
+                        "RelatedResources",
+                        "Category",
+                        "Impact",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "RecommendationDetails": {
+                            "function": "describe_recommendation",
+                            "relation_field": "RecommendationId",
+                            "fields": [
+                                "RecommendationId",
+                                "Description",
+                                "RecommendationType",
+                                "Category",
+                                "Impact",
+                                "RelatedEvents",
+                                "RelatedResources",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Recommendation": {
+                                    "permissions": "DescribeRecommendation",
+                                    "item_search_id": "RecommendationId",
+                                    "detail_function": "describe_recommendation",
+                                    "detail_param": "RecommendationId"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "function": "list_events",
+    "fields": {
+        "Events": {
+            "fields": [
+                "Id",
+                "ResourceCollection",
+                "EventTime",
+                "EventSource",
+                "EventName",
+                "EventType",
+                "Tags"
+            ]
+        }
+    },
+    "function": "list_anomalies",
+    "fields": {
+        "Anomalies": {
+            "fields": [
+                "Id",
+                "Name",
+                "Severity",
+                "Status",
+                "StartTime",
+                "EndTime",
+                "AssociatedInsights",
+                "Tags"
+            ]
+        }
+    }
+}

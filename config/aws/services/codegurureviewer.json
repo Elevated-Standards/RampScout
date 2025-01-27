@@ -1,0 +1,88 @@
+{
+    "service": "codegurureviewer",
+    "function": "list_repositories",
+    "fields": {
+        "RepositoryAssociationSummaries": {
+            "fields": [
+                "AssociationArn",
+                "AssociationId",
+                "RepositoryName",
+                "ProviderType",
+                "State",
+                "CreatedTimeStamp",
+                "LastUpdatedTimeStamp",
+                "Tags"
+            ],
+            "subresources": {
+                "RepositoryDetails": {
+                    "function": "describe_repository_association",
+                    "relation_field": "AssociationArn",
+                    "fields": [
+                        "AssociationArn",
+                        "AssociationId",
+                        "RepositoryName",
+                        "ProviderType",
+                        "State",
+                        "CreatedTimeStamp",
+                        "LastUpdatedTimeStamp",
+                        "KMSKeyDetails",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "RepositoryAssociation": {
+                            "permissions": "DescribeRepositoryAssociation",
+                            "item_search_id": "AssociationArn",
+                            "detail_function": "describe_repository_association",
+                            "detail_param": "AssociationArn"
+                        }
+                    }
+                },
+                "CodeReviews": {
+                    "function": "list_code_reviews",
+                    "relation_field": "AssociationArn",
+                    "fields": [
+                        "CodeReviewArn",
+                        "Name",
+                        "RepositoryName",
+                        "Owner",
+                        "State",
+                        "Type",
+                        "PullRequestId",
+                        "CreatedTimeStamp",
+                        "LastUpdatedTimeStamp",
+                        "Metrics",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "CodeReviewDetails": {
+                            "function": "describe_code_review",
+                            "relation_field": "CodeReviewArn",
+                            "fields": [
+                                "CodeReviewArn",
+                                "Name",
+                                "RepositoryName",
+                                "Owner",
+                                "State",
+                                "Type",
+                                "PullRequestId",
+                                "Metrics",
+                                "FindingsSummary",
+                                "CreatedTimeStamp",
+                                "LastUpdatedTimeStamp",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "CodeReview": {
+                                    "permissions": "DescribeCodeReview",
+                                    "item_search_id": "CodeReviewArn",
+                                    "detail_function": "describe_code_review",
+                                    "detail_param": "CodeReviewArn"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

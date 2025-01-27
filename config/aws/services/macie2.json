@@ -1,0 +1,138 @@
+{
+    "service": "macie2",
+    "function": "list_classification_jobs",
+    "fields": {
+        "ClassificationJobs": {
+            "fields": [
+                "JobId",
+                "Name",
+                "Description",
+                "JobStatus",
+                "JobType",
+                "CreatedAt",
+                "LastRunTime",
+                "S3JobDefinition",
+                "SamplingPercentage",
+                "Tags"
+            ],
+            "subresources": {
+                "JobDetails": {
+                    "function": "describe_classification_job",
+                    "relation_field": "JobId",
+                    "fields": [
+                        "JobId",
+                        "Name",
+                        "Description",
+                        "JobStatus",
+                        "JobType",
+                        "S3JobDefinition",
+                        "LastRunTime",
+                        "CreatedAt",
+                        "Statistics",
+                        "SamplingPercentage",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Job": {
+                            "permissions": "DescribeClassificationJob",
+                            "item_search_id": "JobId",
+                            "detail_function": "describe_classification_job",
+                            "detail_param": "JobId"
+                        }
+                    }
+                }
+            }
+        },
+        "Findings": {
+            "function": "list_findings",
+            "fields": [
+                "FindingId",
+                "AccountId",
+                "Severity",
+                "Type",
+                "CreatedAt",
+                "UpdatedAt",
+                "Title",
+                "Description",
+                "ResourcesAffected",
+                "Remediation",
+                "Tags"
+            ],
+            "subresources": {
+                "FindingDetails": {
+                    "function": "get_finding",
+                    "relation_field": "FindingId",
+                    "fields": [
+                        "FindingId",
+                        "AccountId",
+                        "Severity",
+                        "Type",
+                        "CreatedAt",
+                        "UpdatedAt",
+                        "Title",
+                        "Description",
+                        "ResourcesAffected",
+                        "Remediation",
+                        "Location",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Finding": {
+                            "permissions": "GetFinding",
+                            "item_search_id": "FindingId",
+                            "detail_function": "get_finding",
+                            "detail_param": "FindingId"
+                        }
+                    }
+                }
+            }
+        },
+        "Members": {
+            "function": "list_members",
+            "fields": [
+                "AccountId",
+                "Arn",
+                "Email",
+                "InvitationId",
+                "InvitedAt",
+                "MasterAccountId",
+                "Status",
+                "UpdatedAt"
+            ]
+        },
+        "CustomDataIdentifiers": {
+            "function": "list_custom_data_identifiers",
+            "fields": [
+                "Id",
+                "Name",
+                "CreatedAt",
+                "UpdatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "CustomDataIdentifierDetails": {
+                    "function": "describe_custom_data_identifier",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Name",
+                        "Description",
+                        "Regex",
+                        "Keywords",
+                        "CreatedAt",
+                        "UpdatedAt",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "CustomDataIdentifier": {
+                            "permissions": "DescribeCustomDataIdentifier",
+                            "item_search_id": "Id",
+                            "detail_function": "describe_custom_data_identifier",
+                            "detail_param": "Id"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

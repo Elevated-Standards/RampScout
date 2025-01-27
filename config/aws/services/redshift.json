@@ -1,0 +1,123 @@
+[
+{
+    "service": "redshift",
+    "function": "describe_clusters",
+    "fields": {
+        "Clusters": {
+            "fields": [
+                "ClusterIdentifier",
+                "NodeType",
+                "ClusterStatus",
+                "ClusterAvailabilityStatus",
+                "MasterUsername",
+                "DBName",
+                "VpcId",
+                "ClusterSubnetGroupName",
+                "ClusterParameterGroups",
+                "ClusterSecurityGroups",
+                "Endpoint",
+                "Tags"
+            ],
+            "subresources": {
+                "ClusterSnapshots": {
+                    "function": "describe_cluster_snapshots",
+                    "relation_field": "ClusterIdentifier",
+                    "fields": [
+                        "SnapshotIdentifier",
+                        "ClusterIdentifier",
+                        "SnapshotType",
+                        "Status",
+                        "SnapshotCreateTime",
+                        "Tags"
+                    ]
+                },
+                "ClusterSubnetGroups": {
+                    "function": "describe_cluster_subnet_groups",
+                    "relation_field": "ClusterSubnetGroupName",
+                    "fields": [
+                        "ClusterSubnetGroupName",
+                        "Description",
+                        "VpcId",
+                        "SubnetGroupStatus",
+                        "Subnets",
+                        "Tags"
+                    ]
+                },
+                "ClusterParameterGroups": {
+                    "function": "describe_cluster_parameter_groups",
+                    "relation_field": "ClusterParameterGroups.ParameterGroupName",
+                    "fields": [
+                        "ParameterGroupName",
+                        "ParameterGroupFamily",
+                        "Description",
+                        "Tags"
+                    ]
+                },
+                "ClusterSecurityGroups": {
+                    "function": "describe_cluster_security_groups",
+                    "relation_field": "ClusterSecurityGroups.ClusterSecurityGroupName",
+                    "fields": [
+                        "ClusterSecurityGroupName",
+                        "Description",
+                        "EC2SecurityGroups",
+                        "Tags"
+                    ]
+                }
+            }
+        }
+    }
+},
+{
+    "service": "redshift",
+    "function": "describe_clusters",
+    "fields": {
+        "Clusters": {
+            "fields": [
+                "ClusterIdentifier",
+                "NodeType",
+                "ClusterStatus",
+                "DBName",
+                "VpcId",
+                "ClusterSubnetGroupName",
+                "ClusterParameterGroups",
+                "ClusterSecurityGroups",
+                "Endpoint",
+                "Tags"
+            ],
+            "subresources": {
+                "DataShares": {
+                    "function": "describe_data_shares",
+                    "relation_field": "ClusterIdentifier",
+                    "fields": [
+                        "DataShareArn",
+                        "ProducerArn",
+                        "Status",
+                        "AllowPublicAccess",
+                        "ConsumerRegion"
+                    ]
+                },
+                "Storage": {
+                    "function": "describe_storage",
+                    "relation_field": "ClusterIdentifier",
+                    "fields": [
+                        "ClusterIdentifier",
+                        "TotalStorageCapacity",
+                        "UsedStorageCapacity",
+                        "FreeStorageCapacity"
+                    ]
+                },
+                "Tags": {
+                    "function": "describe_tags",
+                    "relation_field": "ResourceName",
+                    "fields": [
+                        "ResourceName",
+                        "Tags"
+                    ]
+                }
+            }
+        }
+    }
+}
+]
+
+

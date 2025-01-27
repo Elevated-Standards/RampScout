@@ -1,0 +1,72 @@
+{
+    "service": "ec2",
+    "function": "describe_volumes",
+    "fields": {
+        "Volumes": {
+            "fields": [
+                "VolumeId",
+                "Size",
+                "VolumeType",
+                "State",
+                "Iops",
+                "Throughput",
+                "AvailabilityZone",
+                "SnapshotId",
+                "CreateTime",
+                "MultiAttachEnabled",
+                "Encrypted",
+                "KmsKeyId",
+                "Tags"
+            ],
+            "subresources": {
+                "Snapshots": {
+                    "function": "describe_snapshots",
+                    "relation_field": "VolumeId",
+                    "fields": [
+                        "SnapshotId",
+                        "VolumeId",
+                        "State",
+                        "StartTime",
+                        "Progress",
+                        "Description",
+                        "Encrypted",
+                        "KmsKeyId",
+                        "Tags"
+                    ]
+                },
+                "Attachments": {
+                    "function": "describe_volumes",
+                    "relation_field": "VolumeId",
+                    "fields": [
+                        "InstanceId",
+                        "Device",
+                        "AttachTime",
+                        "State",
+                        "DeleteOnTermination"
+                    ]
+                },
+                "Metrics": {
+                    "service": "cloudwatch",
+                    "function": "get_metric_data",
+                    "relation_field": "VolumeId",
+                    "fields": [
+                        "ReadThroughput",
+                        "WriteThroughput",
+                        "ReadOps",
+                        "WriteOps",
+                        "BurstBalance",
+                        "VolumeIdleTime"
+                    ],
+                    "detail_functions": {
+                        "Metrics": {
+                            "permissions": "GetMetricData",
+                            "item_search_id": "VolumeId",
+                            "detail_function": "get_metric_data",
+                            "detail_param": "MetricQueries"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

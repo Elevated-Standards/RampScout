@@ -1,0 +1,55 @@
+{
+    "service": "apigatewayv2",
+    "function": "get_apis",
+    "fields": {
+        "Apis": {
+            "fields": [
+                "ApiId",
+                "Name",
+                "ProtocolType",
+                "Description",
+                "Version",
+                "CreatedDate",
+                "RouteSelectionExpression",
+                "CorsConfiguration",
+                "Tags"
+            ],
+            "subresources": {
+                "Routes": {
+                    "function": "get_routes",
+                    "relation_field": "ApiId",
+                    "fields": [
+                        "RouteId",
+                        "RouteKey",
+                        "Target",
+                        "AuthorizationType",
+                        "AuthorizationScopes"
+                    ]
+                },
+                "Stages": {
+                    "function": "get_stages",
+                    "relation_field": "ApiId",
+                    "fields": [
+                        "StageName",
+                        "DeploymentId",
+                        "Description",
+                        "CreatedDate",
+                        "LastUpdatedDate",
+                        "AutoDeploy",
+                        "RouteSettings",
+                        "Tags"
+                    ]
+                },
+                "Deployments": {
+                    "function": "get_deployments",
+                    "relation_field": "ApiId",
+                    "fields": [
+                        "DeploymentId",
+                        "CreatedDate",
+                        "Description"
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "service": "cloudformation",
+    "function": "describe_stacks",
+    "fields": {
+        "Stacks": {
+            "fields": [
+                "StackName",
+                "StackId",
+                "Description",
+                "CreationTime",
+                "LastUpdatedTime",
+                "StackStatus",
+                "StackStatusReason",
+                "Outputs",
+                "Tags"
+            ]
+        }
+    }
+}

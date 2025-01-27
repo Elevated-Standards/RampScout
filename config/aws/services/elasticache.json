@@ -1,0 +1,53 @@
+{
+    "service": "elasticache",
+    "function": "describe_cache_clusters",
+    "fields": {
+        "CacheClusters": {
+            "fields": [
+                "CacheClusterId",
+                "Engine",
+                "EngineVersion",
+                "CacheNodeType",
+                "NumCacheNodes",
+                "CacheClusterStatus",
+                "PreferredAvailabilityZone",
+                "ReplicationGroupId",
+                "VpcId",
+                "Tags"
+            ],
+            "subresources": {
+                "ReplicationGroups": {
+                    "function": "describe_replication_groups",
+                    "relation_field": "ReplicationGroupId",
+                    "fields": [
+                        "ReplicationGroupId",
+                        "Status",
+                        "PrimaryEndpoint",
+                        "NodeGroups",
+                        "SnapshottingClusterId",
+                        "AutomaticFailover",
+                        "MultiAZ",
+                        "Tags"
+                    ]
+                },
+                "SecurityGroups": {
+                    "function": "describe_cache_security_groups",
+                    "fields": [
+                        "CacheSecurityGroupName",
+                        "Description",
+                        "OwnerId",
+                        "EC2SecurityGroups"
+                    ]
+                },
+                "Tags": {
+                    "function": "list_tags_for_resource",
+                    "relation_field": "ARN",
+                    "fields": [
+                        "ARN",
+                        "Tags"
+                    ]
+                }
+            }
+        }
+    }
+}

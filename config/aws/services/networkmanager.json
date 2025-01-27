@@ -1,0 +1,150 @@
+{
+    "service": "networkmanager",
+    "function": "list_global_networks",
+    "fields": {
+        "GlobalNetworks": {
+            "fields": [
+                "GlobalNetworkId",
+                "GlobalNetworkArn",
+                "Description",
+                "State",
+                "CreatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "Devices": {
+                    "function": "list_devices",
+                    "relation_field": "GlobalNetworkId",
+                    "fields": [
+                        "DeviceId",
+                        "DeviceArn",
+                        "Description",
+                        "Type",
+                        "Vendor",
+                        "Model",
+                        "Location",
+                        "State",
+                        "CreatedAt",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "DeviceDetails": {
+                            "function": "get_device",
+                            "relation_field": "DeviceId",
+                            "fields": [
+                                "DeviceId",
+                                "DeviceArn",
+                                "Description",
+                                "Type",
+                                "Vendor",
+                                "Model",
+                                "SerialNumber",
+                                "Location",
+                                "State",
+                                "CreatedAt",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Device": {
+                                    "permissions": "GetDevice",
+                                    "item_search_id": "DeviceId",
+                                    "detail_function": "get_device",
+                                    "detail_param": "DeviceId"
+                                }
+                            }
+                        }
+                    }
+                },
+                "Links": {
+                    "function": "list_links",
+                    "relation_field": "GlobalNetworkId",
+                    "fields": [
+                        "LinkId",
+                        "LinkArn",
+                        "Description",
+                        "Bandwidth",
+                        "Provider",
+                        "State",
+                        "Type",
+                        "CreatedAt",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "LinkDetails": {
+                            "function": "get_link",
+                            "relation_field": "LinkId",
+                            "fields": [
+                                "LinkId",
+                                "LinkArn",
+                                "Description",
+                                "Bandwidth",
+                                "Provider",
+                                "Type",
+                                "State",
+                                "CreatedAt",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Link": {
+                                    "permissions": "GetLink",
+                                    "item_search_id": "LinkId",
+                                    "detail_function": "get_link",
+                                    "detail_param": "LinkId"
+                                }
+                            }
+                        }
+                    }
+                },
+                "Connections": {
+                    "function": "list_connections",
+                    "relation_field": "GlobalNetworkId",
+                    "fields": [
+                        "ConnectionId",
+                        "ConnectionArn",
+                        "DeviceId",
+                        "LinkId",
+                        "State",
+                        "CreatedAt",
+                        "Tags"
+                    ]
+                },
+                "Sites": {
+                    "function": "list_sites",
+                    "relation_field": "GlobalNetworkId",
+                    "fields": [
+                        "SiteId",
+                        "SiteArn",
+                        "Description",
+                        "Location",
+                        "State",
+                        "CreatedAt",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "SiteDetails": {
+                            "function": "get_site",
+                            "relation_field": "SiteId",
+                            "fields": [
+                                "SiteId",
+                                "SiteArn",
+                                "Description",
+                                "Location",
+                                "State",
+                                "CreatedAt",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Site": {
+                                    "permissions": "GetSite",
+                                    "item_search_id": "SiteId",
+                                    "detail_function": "get_site",
+                                    "detail_param": "SiteId"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

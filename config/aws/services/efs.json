@@ -1,0 +1,20 @@
+{
+    "service": "efs",
+    "function": "describe_file_systems",
+    "fields": {
+        "FileSystems": {
+            "fields": [
+                "FileSystemId",
+                "OwnerId",
+                "CreationTime",
+                "LifeCycleState",
+                "PerformanceMode",
+                "ThroughputMode",
+                "SizeInBytes",
+                "Encrypted",
+                "KmsKeyId",
+                "Tags"
+            ]
+        }
+    }
+}

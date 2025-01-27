@@ -1,0 +1,116 @@
+{
+    "service": "emr",
+    "function": "list_clusters",
+    "fields": {
+        "Clusters": {
+            "fields": [
+                "Id",
+                "Name",
+                "Status.State",
+                "Status.StateChangeReason.Code",
+                "Status.Timeline.CreationDateTime",
+                "Status.Timeline.ReadyDateTime",
+                "Status.Timeline.EndDateTime",
+                "NormalizedInstanceHours",
+                "Tags"
+            ],
+            "subresources": {
+                "ClusterDetails": {
+                    "function": "describe_cluster",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Name",
+                        "ReleaseLabel",
+                        "InstanceCollectionType",
+                        "Status.State",
+                        "Status.StateChangeReason.Code",
+                        "Status.StateChangeReason.Message",
+                        "Configurations",
+                        "Applications",
+                        "ServiceRole",
+                        "AutoScalingRole",
+                        "Tags",
+                        "LogUri"
+                    ],
+                    "detail_functions": {
+                        "Cluster": {
+                            "permissions": "DescribeCluster",
+                            "item_search_id": "Id",
+                            "detail_function": "describe_cluster",
+                            "detail_param": "ClusterId"
+                        }
+                    }
+                },
+                "Instances": {
+                    "function": "list_instances",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Ec2InstanceId",
+                        "InstanceType",
+                        "Status.State",
+                        "Status.StateChangeReason",
+                        "Status.Timeline.CreationDateTime",
+                        "Status.Timeline.StartDateTime",
+                        "Status.Timeline.EndDateTime",
+                        "PrivateDnsName",
+                        "PublicDnsName",
+                        "Tags"
+                    ]
+                },
+                "Steps": {
+                    "function": "list_steps",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Name",
+                        "Config.HadoopJarStep.Jar",
+                        "Config.HadoopJarStep.MainClass",
+                        "Config.HadoopJarStep.Args",
+                        "Status.State",
+                        "Status.Timeline.CreationDateTime",
+                        "Status.Timeline.StartDateTime",
+                        "Status.Timeline.EndDateTime",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "StepDetails": {
+                            "function": "describe_step",
+                            "relation_field": "Id",
+                            "fields": [
+                                "Id",
+                                "Name",
+                                "Config.HadoopJarStep.Jar",
+                                "Config.HadoopJarStep.MainClass",
+                                "Config.HadoopJarStep.Args",
+                                "Status.State",
+                                "Status.Timeline.CreationDateTime",
+                                "Status.Timeline.StartDateTime",
+                                "Status.Timeline.EndDateTime",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Step": {
+                                    "permissions": "DescribeStep",
+                                    "item_search_id": "Id",
+                                    "detail_function": "describe_step",
+                                    "detail_param": "StepId"
+                                }
+                            }
+                        }
+                    }
+                },
+                "SecurityConfiguration": {
+                    "function": "describe_security_configuration",
+                    "relation_field": "SecurityConfigurationName",
+                    "fields": [
+                        "Name",
+                        "SecurityConfiguration",
+                        "CreationDateTime"
+                    ]
+                }
+            }
+        }
+    }
+}

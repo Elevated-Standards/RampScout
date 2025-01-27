@@ -1,0 +1,34 @@
+{
+    "service": "batch",
+    "function": "describe_job_queues",
+    "fields": {
+        "JobQueues": {
+            "fields": [
+                "JobQueueName",
+                "JobQueueArn",
+                "State",
+                "Status",
+                "Priority",
+                "ComputeEnvironmentOrder",
+                "Tags"
+            ],
+            "subresources": {
+                "JobDefinitions": {
+                    "function": "describe_job_definitions",
+                    "relation_field": "JobQueueArn",
+                    "fields": [
+                        "JobDefinitionName",
+                        "JobDefinitionArn",
+                        "Revision",
+                        "Status",
+                        "Type",
+                        "ContainerProperties",
+                        "RetryStrategy",
+                        "Timeout",
+                        "Tags"
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "service": "apprunner",
+    "function": "list_services",
+    "fields": {
+        "Services": {
+            "fields": [
+                "ServiceArn",
+                "ServiceName",
+                "ServiceUrl",
+                "CreatedAt",
+                "UpdatedAt",
+                "Status",
+                "Tags"
+            ],
+            "subresources": {
+                "ServiceDetails": {
+                    "function": "describe_service",
+                    "relation_field": "ServiceArn",
+                    "fields": [
+                        "ServiceArn",
+                        "ServiceName",
+                        "ServiceUrl",
+                        "SourceConfiguration",
+                        "InstanceConfiguration",
+                        "HealthCheckConfiguration",
+                        "AutoScalingConfigurationSummary",
+                        "EncryptionConfiguration",
+                        "CreatedAt",
+                        "UpdatedAt",
+                        "Status",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Service": {
+                            "permissions": "DescribeService",
+                            "item_search_id": "ServiceArn",
+                            "detail_function": "describe_service",
+                            "detail_param": "ServiceArn"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "service": "grafana",
+    "function": "list_workspaces",
+    "fields": {
+        "Workspaces": {
+            "fields": [
+                "WorkspaceId",
+                "WorkspaceName",
+                "Arn",
+                "Status",
+                "Created",
+                "Authentication",
+                "Endpoint",
+                "AccountAccessType",
+                "Tags"
+            ],
+            "subresources": {
+                "WorkspaceDetails": {
+                    "function": "describe_workspace",
+                    "relation_field": "WorkspaceId",
+                    "fields": [
+                        "WorkspaceId",
+                        "WorkspaceName",
+                        "Arn",
+                        "Status",
+                        "Created",
+                        "Modified",
+                        "Authentication",
+                        "Endpoint",
+                        "AccountAccessType",
+                        "OrganizationRoleName",
+                        "DataSources",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Workspace": {
+                            "permissions": "DescribeWorkspace",
+                            "item_search_id": "WorkspaceId",
+                            "detail_function": "describe_workspace",
+                            "detail_param": "WorkspaceId"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

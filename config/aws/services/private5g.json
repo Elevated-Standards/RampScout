@@ -1,0 +1,38 @@
+{
+    "service": "private5g",
+    "function": "list_networks",
+    "fields": {
+        "Networks": {
+            "fields": [
+                "NetworkArn",
+                "NetworkName",
+                "Status",
+                "CreatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "NetworkDetails": {
+                    "function": "get_network",
+                    "relation_field": "NetworkArn",
+                    "fields": [
+                        "NetworkArn",
+                        "NetworkName",
+                        "Status",
+                        "Description",
+                        "CreatedAt",
+                        "UpdatedAt",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Network": {
+                            "permissions": "GetNetwork",
+                            "item_search_id": "NetworkArn",
+                            "detail_function": "get_network",
+                            "detail_param": "NetworkArn"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

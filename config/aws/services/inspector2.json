@@ -1,0 +1,118 @@
+{
+    "service": "inspector2",
+    "function": "list_findings",
+    "fields": {
+        "Findings": {
+            "fields": [
+                "FindingArn",
+                "Title",
+                "Description",
+                "Severity",
+                "Status",
+                "FindingType",
+                "CreatedAt",
+                "UpdatedAt",
+                "Remediation",
+                "Resources",
+                "Vulnerability",
+                "Tags"
+            ],
+            "subresources": {
+                "FindingDetails": {
+                    "function": "get_finding_details",
+                    "relation_field": "FindingArn",
+                    "fields": [
+                        "FindingArn",
+                        "Title",
+                        "Description",
+                        "Severity",
+                        "Status",
+                        "FindingType",
+                        "CreatedAt",
+                        "UpdatedAt",
+                        "Remediation",
+                        "Resources",
+                        "Vulnerability",
+                        "ExploitabilityDetails",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Finding": {
+                            "permissions": "GetFindingDetails",
+                            "item_search_id": "FindingArn",
+                            "detail_function": "get_finding_details",
+                            "detail_param": "FindingArn"
+                        }
+                    }
+                }
+            }
+        },
+        "Coverage": {
+            "function": "list_coverage",
+            "fields": [
+                "ResourceArn",
+                "ResourceType",
+                "ScanStatus",
+                "AccountId",
+                "Tags"
+            ],
+            "subresources": {
+                "CoverageDetails": {
+                    "function": "get_coverage_details",
+                    "relation_field": "ResourceArn",
+                    "fields": [
+                        "ResourceArn",
+                        "ResourceType",
+                        "ScanStatus",
+                        "CoverageType",
+                        "LastScannedAt",
+                        "FindingsCount",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Coverage": {
+                            "permissions": "GetCoverageDetails",
+                            "item_search_id": "ResourceArn",
+                            "detail_function": "get_coverage_details",
+                            "detail_param": "ResourceArn"
+                        }
+                    }
+                }
+            }
+        },
+        "Reports": {
+            "function": "list_reports",
+            "fields": [
+                "ReportId",
+                "Status",
+                "CreatedAt",
+                "CompletedAt",
+                "ResourceTypes",
+                "Tags"
+            ],
+            "subresources": {
+                "ReportDetails": {
+                    "function": "get_report",
+                    "relation_field": "ReportId",
+                    "fields": [
+                        "ReportId",
+                        "Status",
+                        "ResourceTypes",
+                        "CreatedAt",
+                        "CompletedAt",
+                        "ReportDownloadUrl",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Report": {
+                            "permissions": "GetReport",
+                            "item_search_id": "ReportId",
+                            "detail_function": "get_report",
+                            "detail_param": "ReportId"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

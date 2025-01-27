@@ -1,0 +1,38 @@
+{
+    "service": "es",
+    "function": "list_domain_names",
+    "fields": {
+        "Domains": {
+            "fields": [
+                "DomainName"
+            ],
+            "subresources": {
+                "DomainDetails": {
+                    "function": "describe_elasticsearch_domain",
+                    "relation_field": "DomainName",
+                    "fields": [
+                        "DomainId",
+                        "DomainName",
+                        "ARN",
+                        "ElasticsearchClusterConfig",
+                        "EBSOptions",
+                        "AccessPolicies",
+                        "SnapshotOptions",
+                        "AdvancedOptions",
+                        "NodeToNodeEncryptionOptions",
+                        "LogPublishingOptions",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Domain": {
+                            "permissions": "DescribeElasticsearchDomain",
+                            "item_search_id": "DomainName",
+                            "detail_function": "describe_elasticsearch_domain",
+                            "detail_param": "DomainName"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

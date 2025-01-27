@@ -1,0 +1,119 @@
+{
+    "service": "ecs",
+    "function": "list_clusters",
+    "fields": {
+        "Clusters": {
+            "fields": [
+                "ClusterArn",
+                "ClusterName",
+                "Status",
+                "RegisteredContainerInstancesCount",
+                "RunningTasksCount",
+                "PendingTasksCount",
+                "ActiveServicesCount",
+                "Tags"
+            ],
+            "subresources": {
+                "ClusterDetails": {
+                    "function": "describe_clusters",
+                    "relation_field": "ClusterArn",
+                    "fields": [
+                        "ClusterArn",
+                        "ClusterName",
+                        "Status",
+                        "RegisteredContainerInstancesCount",
+                        "RunningTasksCount",
+                        "PendingTasksCount",
+                        "ActiveServicesCount",
+                        "DefaultCapacityProviderStrategy",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Cluster": {
+                            "permissions": "DescribeClusters",
+                            "item_search_id": "ClusterArn",
+                            "detail_function": "describe_clusters",
+                            "detail_param": "ClusterArn"
+                        }
+                    }
+                },
+                "Services": {
+                    "function": "list_services",
+                    "relation_field": "ClusterArn",
+                    "fields": [
+                        "ServiceArn",
+                        "ServiceName",
+                        "Status",
+                        "DesiredCount",
+                        "RunningCount",
+                        "PendingCount",
+                        "LaunchType",
+                        "SchedulingStrategy",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "ServiceDetails": {
+                            "function": "describe_services",
+                            "relation_field": "ServiceArn",
+                            "fields": [
+                                "ServiceArn",
+                                "ServiceName",
+                                "ClusterArn",
+                                "Status",
+                                "DesiredCount",
+                                "RunningCount",
+                                "PendingCount",
+                                "LaunchType",
+                                "TaskDefinition",
+                                "Deployments",
+                                "Events",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Service": {
+                                    "permissions": "DescribeServices",
+                                    "item_search_id": "ServiceArn",
+                                    "detail_function": "describe_services",
+                                    "detail_param": "ServiceArn"
+                                }
+                            }
+                        }
+                    }
+                },
+                "Tasks": {
+                    "function": "list_tasks",
+                    "relation_field": "ClusterArn",
+                    "fields": [
+                        "TaskArn"
+                    ],
+                    "subresources": {
+                        "TaskDetails": {
+                            "function": "describe_tasks",
+                            "relation_field": "TaskArn",
+                            "fields": [
+                                "TaskArn",
+                                "ClusterArn",
+                                "TaskDefinitionArn",
+                                "LastStatus",
+                                "DesiredStatus",
+                                "Containers",
+                                "StartedAt",
+                                "CreatedAt",
+                                "StoppedAt",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Task": {
+                                    "permissions": "DescribeTasks",
+                                    "item_search_id": "TaskArn",
+                                    "detail_function": "describe_tasks",
+                                    "detail_param": "TaskArn"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "service": "elasticbeanstalk",
+    "function": "describe_applications",
+    "fields": {
+        "Applications": {
+            "fields": [
+                "ApplicationName",
+                "ApplicationArn",
+                "Description",
+                "DateCreated",
+                "DateUpdated",
+                "Versions",
+                "ConfigurationTemplates",
+                "Tags"
+            ],
+            "subresources": {
+                "Environments": {
+                    "function": "describe_environments",
+                    "relation_field": "ApplicationName",
+                    "fields": [
+                        "EnvironmentName",
+                        "EnvironmentArn",
+                        "ApplicationName",
+                        "VersionLabel",
+                        "SolutionStackName",
+                        "PlatformArn",
+                        "Status",
+                        "Health",
+                        "Resources",
+                        "DateCreated",
+                        "DateUpdated",
+                        "Tags"
+                    ]
+                }
+            }
+        }
+    }
+}

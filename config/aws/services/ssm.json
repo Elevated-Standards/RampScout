@@ -1,0 +1,103 @@
+{
+    "service": "ssm",
+    "function": "describe_instance_information",
+    "fields": {
+        "Instances": {
+            "fields": [
+                "InstanceId",
+                "PingStatus",
+                "LastPingDateTime",
+                "AgentVersion",
+                "PlatformType",
+                "PlatformName",
+                "PlatformVersion",
+                "Tags"
+            ]
+        },
+        "Parameters": {
+            "function": "describe_parameters",
+            "fields": [
+                "Name",
+                "Type",
+                "LastModifiedDate",
+                "LastModifiedUser",
+                "Description",
+                "Version",
+                "Tags"
+            ],
+            "subresources": {
+                "ParameterDetails": {
+                    "function": "get_parameter",
+                    "relation_field": "Name",
+                    "fields": [
+                        "Name",
+                        "Type",
+                        "Value",
+                        "Version",
+                        "LastModifiedDate",
+                        "ARN",
+                        "Description",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Parameter": {
+                            "permissions": "GetParameter",
+                            "item_search_id": "Name",
+                            "detail_function": "get_parameter",
+                            "detail_param": "Name"
+                        }
+                    }
+                }
+            }
+        },
+        "Documents": {
+            "function": "list_documents",
+            "fields": [
+                "Name",
+                "DocumentType",
+                "DocumentFormat",
+                "DocumentVersion",
+                "Owner",
+                "CreatedDate",
+                "Tags"
+            ],
+            "subresources": {
+                "DocumentDetails": {
+                    "function": "get_document",
+                    "relation_field": "Name",
+                    "fields": [
+                        "Name",
+                        "DocumentType",
+                        "Content",
+                        "DocumentFormat",
+                        "DocumentVersion",
+                        "Owner",
+                        "CreatedDate",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Document": {
+                            "permissions": "GetDocument",
+                            "item_search_id": "Name",
+                            "detail_function": "get_document",
+                            "detail_param": "Name"
+                        }
+                    }
+                }
+            }
+        },
+        "MaintenanceWindows": {
+            "function": "describe_maintenance_windows",
+            "fields": [
+                "WindowId",
+                "Name",
+                "Description",
+                "Enabled",
+                "Schedule",
+                "Duration",
+                "Cutoff",
+                "Tags"
+            ]
+        }
+    }
+}

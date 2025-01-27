@@ -1,0 +1,120 @@
+{
+    "service": "internetmonitor",
+    "function": "list_monitors",
+    "fields": {
+        "Monitors": {
+            "fields": [
+                "MonitorName",
+                "MonitorArn",
+                "Status",
+                "HealthEventsCount",
+                "CreatedAt",
+                "UpdatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "MonitorDetails": {
+                    "function": "get_monitor",
+                    "relation_field": "MonitorArn",
+                    "fields": [
+                        "MonitorName",
+                        "MonitorArn",
+                        "Resources",
+                        "TrafficPercentageToMonitor",
+                        "HealthEventsThreshold",
+                        "InternetMeasurementsLogDelivery",
+                        "Status",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Monitor": {
+                            "permissions": "GetMonitor",
+                            "item_search_id": "MonitorArn",
+                            "detail_function": "get_monitor",
+                            "detail_param": "MonitorArn"
+                        }
+                    }
+                },
+                "HealthEvents": {
+                    "function": "list_health_events",
+                    "relation_field": "MonitorArn",
+                    "fields": [
+                        "EventId",
+                        "StartTime",
+                        "EndTime",
+                        "ImpactedLocations",
+                        "EventStatus",
+                        "Severity",
+                        "CreatedAt",
+                        "UpdatedAt",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "EventDetails": {
+                            "function": "get_health_event",
+                            "relation_field": "EventId",
+                            "fields": [
+                                "EventId",
+                                "StartTime",
+                                "EndTime",
+                                "ImpactedLocations",
+                                "Status",
+                                "Severity",
+                                "RootCause",
+                                "EventDescription",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Event": {
+                                    "permissions": "GetHealthEvent",
+                                    "item_search_id": "EventId",
+                                    "detail_function": "get_health_event",
+                                    "detail_param": "EventId"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "function": "list_vpc_monitors",
+    "fields": {
+        "VpcMonitors": {
+            "fields": [
+                "MonitorId",
+                "MonitorName",
+                "VpcId",
+                "SubnetId",
+                "Status",
+                "CreatedAt",
+                "UpdatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "MonitorDetails": {
+                    "function": "get_vpc_monitor",
+                    "relation_field": "MonitorId",
+                    "fields": [
+                        "MonitorId",
+                        "MonitorName",
+                        "VpcId",
+                        "SubnetId",
+                        "TrafficData",
+                        "PerformanceMetrics",
+                        "Status",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Monitor": {
+                            "permissions": "GetVpcMonitor",
+                            "item_search_id": "MonitorId",
+                            "detail_function": "get_vpc_monitor",
+                            "detail_param": "MonitorId"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

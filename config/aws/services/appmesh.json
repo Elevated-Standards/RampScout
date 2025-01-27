@@ -1,0 +1,145 @@
+{
+    "service": "appmesh",
+    "function": "list_meshes",
+    "fields": {
+        "Meshes": {
+            "fields": [
+                "MeshName",
+                "MeshArn",
+                "CreatedAt",
+                "LastUpdatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "VirtualServices": {
+                    "function": "list_virtual_services",
+                    "relation_field": "MeshName",
+                    "fields": [
+                        "VirtualServiceName",
+                        "VirtualServiceArn",
+                        "CreatedAt",
+                        "LastUpdatedAt",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "VirtualServiceDetails": {
+                            "function": "describe_virtual_service",
+                            "relation_field": "VirtualServiceName",
+                            "fields": [
+                                "VirtualServiceName",
+                                "VirtualServiceArn",
+                                "Spec",
+                                "Status",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "VirtualService": {
+                                    "permissions": "DescribeVirtualService",
+                                    "item_search_id": "VirtualServiceName",
+                                    "detail_function": "describe_virtual_service",
+                                    "detail_param": "VirtualServiceName"
+                                }
+                            }
+                        }
+                    }
+                },
+                "VirtualNodes": {
+                    "function": "list_virtual_nodes",
+                    "relation_field": "MeshName",
+                    "fields": [
+                        "VirtualNodeName",
+                        "VirtualNodeArn",
+                        "CreatedAt",
+                        "LastUpdatedAt",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "VirtualNodeDetails": {
+                            "function": "describe_virtual_node",
+                            "relation_field": "VirtualNodeName",
+                            "fields": [
+                                "VirtualNodeName",
+                                "VirtualNodeArn",
+                                "Spec",
+                                "Status",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "VirtualNode": {
+                                    "permissions": "DescribeVirtualNode",
+                                    "item_search_id": "VirtualNodeName",
+                                    "detail_function": "describe_virtual_node",
+                                    "detail_param": "VirtualNodeName"
+                                }
+                            }
+                        }
+                    }
+                },
+                "VirtualRouters": {
+                    "function": "list_virtual_routers",
+                    "relation_field": "MeshName",
+                    "fields": [
+                        "VirtualRouterName",
+                        "VirtualRouterArn",
+                        "CreatedAt",
+                        "LastUpdatedAt",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "VirtualRouterDetails": {
+                            "function": "describe_virtual_router",
+                            "relation_field": "VirtualRouterName",
+                            "fields": [
+                                "VirtualRouterName",
+                                "VirtualRouterArn",
+                                "Spec",
+                                "Status",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "VirtualRouter": {
+                                    "permissions": "DescribeVirtualRouter",
+                                    "item_search_id": "VirtualRouterName",
+                                    "detail_function": "describe_virtual_router",
+                                    "detail_param": "VirtualRouterName"
+                                }
+                            }
+                        }
+                    }
+                },
+                "Routes": {
+                    "function": "list_routes",
+                    "relation_field": "VirtualRouterName",
+                    "fields": [
+                        "RouteName",
+                        "RouteArn",
+                        "CreatedAt",
+                        "LastUpdatedAt",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "RouteDetails": {
+                            "function": "describe_route",
+                            "relation_field": "RouteName",
+                            "fields": [
+                                "RouteName",
+                                "RouteArn",
+                                "Spec",
+                                "Status",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Route": {
+                                    "permissions": "DescribeRoute",
+                                    "item_search_id": "RouteName",
+                                    "detail_function": "describe_route",
+                                    "detail_param": "RouteName"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

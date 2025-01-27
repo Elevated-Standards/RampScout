@@ -1,0 +1,91 @@
+{
+    "service": "securitylake",
+    "function": "list_data_lakes",
+    "fields": {
+        "DataLakes": {
+            "fields": [
+                "DataLakeArn",
+                "Region",
+                "Status",
+                "CreatedAt",
+                "UpdatedAt",
+                "RetentionSettings",
+                "Tags"
+            ],
+            "subresources": {
+                "SourceConfigurations": {
+                    "function": "list_data_lake_sources",
+                    "relation_field": "DataLakeArn",
+                    "fields": [
+                        "SourceType",
+                        "SourceName",
+                        "SourceStatus",
+                        "DataLakeArn",
+                        "SourceRegion",
+                        "CreatedAt",
+                        "UpdatedAt",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "SourceDetails": {
+                            "function": "get_data_lake_source",
+                            "relation_field": "SourceName",
+                            "fields": [
+                                "SourceName",
+                                "SourceType",
+                                "SourceStatus",
+                                "SourceRegion",
+                                "CreatedAt",
+                                "UpdatedAt",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Source": {
+                                    "permissions": "GetDataLakeSource",
+                                    "item_search_id": "SourceName",
+                                    "detail_function": "get_data_lake_source",
+                                    "detail_param": "SourceName"
+                                }
+                            }
+                        }
+                    }
+                },
+                "LogsConfiguration": {
+                    "function": "list_log_sources",
+                    "relation_field": "DataLakeArn",
+                    "fields": [
+                        "LogSourceType",
+                        "LogSourceName",
+                        "LogSourceStatus",
+                        "CreatedAt",
+                        "UpdatedAt",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "LogSourceDetails": {
+                            "function": "get_log_source",
+                            "relation_field": "LogSourceName",
+                            "fields": [
+                                "LogSourceName",
+                                "LogSourceType",
+                                "LogSourceStatus",
+                                "Configuration",
+                                "CreatedAt",
+                                "UpdatedAt",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "LogSource": {
+                                    "permissions": "GetLogSource",
+                                    "item_search_id": "LogSourceName",
+                                    "detail_function": "get_log_source",
+                                    "detail_param": "LogSourceName"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

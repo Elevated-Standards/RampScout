@@ -1,0 +1,40 @@
+{
+    "service": "resource-groups",
+    "function": "list_groups",
+    "fields": {
+        "Groups": {
+            "fields": [
+                "Name",
+                "GroupArn",
+                "Description",
+                "ResourceQuery",
+                "Tags",
+                "CreatedDate",
+                "UpdatedDate"
+            ],
+            "subresources": {
+                "GroupDetails": {
+                    "function": "get_group",
+                    "relation_field": "Name",
+                    "fields": [
+                        "GroupName",
+                        "GroupArn",
+                        "Description",
+                        "ResourceQuery",
+                        "Tags",
+                        "CreatedDate",
+                        "UpdatedDate"
+                    ],
+                    "detail_functions": {
+                        "Group": {
+                            "permissions": "GetGroup",
+                            "item_search_id": "GroupName",
+                            "detail_function": "get_group",
+                            "detail_param": "GroupName"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

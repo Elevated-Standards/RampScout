@@ -1,0 +1,98 @@
+[
+{
+    "service": "config",
+    "function": "describe_configuration_recorders",
+    "fields": {
+        "ConfigurationRecorders": {
+            "fields": [
+                "Name",
+                "RoleARN",
+                "RecordingGroup"
+            ],
+            "subresources": {
+                "RecorderStatus": {
+                    "function": "describe_configuration_recorder_status",
+                    "relation_field": "Name",
+                    "fields": [
+                        "Name",
+                        "Recording",
+                        "LastStatus",
+                        "LastErrorCode",
+                        "LastErrorMessage",
+                        "LastStartTime",
+                        "LastStopTime"
+                    ]
+                }
+            }
+        }
+    },
+    "function": "describe_delivery_channels",
+    "fields": {
+        "DeliveryChannels": {
+            "fields": [
+                "Name",
+                "S3BucketName",
+                "S3KeyPrefix",
+                "SnsTopicARN"
+            ]
+        }
+    },
+    "function": "describe_config_rules",
+    "fields": {
+        "ConfigRules": {
+            "fields": [
+                "ConfigRuleName",
+                "ConfigRuleArn",
+                "ConfigRuleId",
+                "Scope",
+                "Source",
+                "InputParameters",
+                "MaximumExecutionFrequency",
+                "ConfigRuleState"
+            ],
+            "subresources": {
+                "Compliance": {
+                    "function": "describe_compliance_by_config_rule",
+                    "relation_field": "ConfigRuleName",
+                    "fields": [
+                        "ConfigRuleName",
+                        "ComplianceType",
+                        "ComplianceContributorCount"
+                    ]
+                }
+            }
+        }
+    },
+    "function": "describe_aggregation_authorizations",
+    "fields": {
+        "AggregationAuthorizations": {
+            "fields": [
+                "AggregationAuthorizationArn",
+                "AuthorizedAccountId",
+                "AuthorizedAwsRegion",
+                "CreationTime"
+            ]
+        }
+    },
+    "function": "describe_pending_aggregation_requests",
+    "fields": {
+        "PendingAggregationRequests": {
+            "fields": [
+                "RequesterAccountId",
+                "RequesterAwsRegion"
+            ]
+        }
+    },
+    "function": "list_discovered_resources",
+    "fields": {
+        "ResourceIdentifiers": {
+            "fields": [
+                "ResourceType",
+                "ResourceId",
+                "ResourceName",
+                "Region"
+            ]
+        }
+    }
+}
+]

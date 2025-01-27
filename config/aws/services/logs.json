@@ -1,0 +1,82 @@
+{
+    "service": "logs",
+    "function": "describe_log_groups",
+    "fields": {
+        "LogGroups": {
+            "fields": [
+                "LogGroupName",
+                "Arn",
+                "RetentionInDays",
+                "MetricFilterCount",
+                "StoredBytes",
+                "Tags",
+                "CreatedAt"
+            ],
+            "subresources": {
+                "LogStreams": {
+                    "function": "describe_log_streams",
+                    "relation_field": "LogGroupName",
+                    "fields": [
+                        "LogStreamName",
+                        "Arn",
+                        "CreationTime",
+                        "FirstEventTimestamp",
+                        "LastEventTimestamp",
+                        "StoredBytes",
+                        "UploadSequenceToken"
+                    ],
+                    "subresources": {
+                        "LogEvents": {
+                            "function": "filter_log_events",
+                            "relation_field": "LogStreamName",
+                            "fields": [
+                                "Timestamp",
+                                "Message",
+                                "IngestionTime",
+                                "EventId"
+                            ],
+                            "detail_functions": {
+                                "LogEvent": {
+                                    "permissions": "FilterLogEvents",
+                                    "item_search_id": "LogStreamName",
+                                    "detail_function": "filter_log_events",
+                                    "detail_param": "LogStreamName"
+                                }
+                            }
+                        }
+                    }
+                },
+                "MetricFilters": {
+                    "function": "describe_metric_filters",
+                    "relation_field": "LogGroupName",
+                    "fields": [
+                        "FilterName",
+                        "FilterPattern",
+                        "MetricTransformations",
+                        "CreationTime"
+                    ]
+                },
+                "SubscriptionFilters": {
+                    "function": "describe_subscription_filters",
+                    "relation_field": "LogGroupName",
+                    "fields": [
+                        "FilterName",
+                        "FilterPattern",
+                        "DestinationArn",
+                        "RoleArn",
+                        "Distribution",
+                        "CreationTime"
+                    ]
+                },
+                "Tags": {
+                    "function": "list_tags_log_group",
+                    "relation_field": "LogGroupName",
+                    "fields": [
+                        "TagKey",
+                        "TagValue"
+                    ]
+                }
+            }
+        }
+    }
+}

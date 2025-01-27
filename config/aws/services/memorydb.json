@@ -1,0 +1,96 @@
+{
+    "service": "memorydb",
+    "function": "describe_clusters",
+    "fields": {
+        "Clusters": {
+            "fields": [
+                "ClusterName",
+                "ARN",
+                "Status",
+                "NodeType",
+                "NumberOfShards",
+                "NumberOfReplicasPerShard",
+                "EngineVersion",
+                "ClusterEndpoint",
+                "ClusterCreationTime",
+                "SubnetGroupName",
+                "SecurityGroupIds",
+                "ACLName",
+                "Tags"
+            ],
+            "subresources": {
+                "ClusterSnapshots": {
+                    "function": "describe_snapshots",
+                    "relation_field": "ClusterName",
+                    "fields": [
+                        "SnapshotName",
+                        "ARN",
+                        "ClusterName",
+                        "Status",
+                        "SnapshotSource",
+                        "SnapshotRetentionLimit",
+                        "SnapshotCreationTime",
+                        "Tags"
+                    ]
+                },
+                "ParameterGroups": {
+                    "function": "describe_parameter_groups",
+                    "fields": [
+                        "ParameterGroupName",
+                        "Family",
+                        "Description",
+                        "Tags"
+                    ]
+                },
+                "SecurityGroups": {
+                    "function": "describe_security_groups",
+                    "fields": [
+                        "Name",
+                        "ARN",
+                        "Description",
+                        "Status",
+                        "Tags"
+                    ]
+                },
+                "SubnetGroups": {
+                    "function": "describe_subnet_groups",
+                    "fields": [
+                        "Name",
+                        "Description",
+                        "Subnets",
+                        "VpcId",
+                        "Tags"
+                    ]
+                },
+                "Users": {
+                    "function": "describe_users",
+                    "fields": [
+                        "Name",
+                        "Status",
+                        "ACLNames",
+                        "Authentication",
+                        "Tags"
+                    ]
+                },
+                "ACLs": {
+                    "function": "describe_acls",
+                    "fields": [
+                        "Name",
+                        "Status",
+                        "ClusterNames",
+                        "UserNames",
+                        "Tags"
+                    ]
+                },
+                "Tags": {
+                    "function": "list_tags_for_resource",
+                    "relation_field": "ARN",
+                    "fields": [
+                        "ARN",
+                        "Tags"
+                    ]
+                }
+            }
+        }
+    }
+}

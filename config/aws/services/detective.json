@@ -1,0 +1,76 @@
+{
+    "service": "detective",
+    "function": "list_graphs",
+    "fields": {
+        "Graphs": {
+            "fields": [
+                "Arn",
+                "CreatedTime",
+                "UpdatedTime",
+                "Tags"
+            ],
+            "subresources": {
+                "GraphDetails": {
+                    "function": "get_members",
+                    "relation_field": "Arn",
+                    "fields": [
+                        "Arn",
+                        "AccountId",
+                        "Status",
+                        "EmailAddress",
+                        "AdministratorId",
+                        "InvitationType",
+                        "CreatedTime",
+                        "UpdatedTime",
+                        "Tags"
+                    ]
+                },
+                "Members": {
+                    "function": "list_members",
+                    "relation_field": "Arn",
+                    "fields": [
+                        "AccountId",
+                        "AdministratorId",
+                        "Status",
+                        "InvitationType",
+                        "EmailAddress",
+                        "UpdatedTime",
+                        "Tags"
+                    ]
+                },
+                "Invitations": {
+                    "function": "list_invitations",
+                    "fields": [
+                        "AccountId",
+                        "AdministratorId",
+                        "Status",
+                        "InvitationType",
+                        "InvitationSentTime",
+                        "UpdatedTime"
+                    ]
+                },
+                "Datasources": {
+                    "function": "list_datasources",
+                    "relation_field": "Arn",
+                    "fields": [
+                        "DatasourcePackage",
+                        "Status",
+                        "CreatedTime",
+                        "LastUpdatedTime",
+                        "Tags"
+                    ]
+                },
+                "DatasourcesDetails": {
+                    "function": "get_datasource",
+                    "relation_field": "DatasourcePackage",
+                    "fields": [
+                        "DatasourcePackage",
+                        "Status",
+                        "Configurations",
+                        "Tags"
+                    ]
+                }
+            }
+        }
+    }
+}

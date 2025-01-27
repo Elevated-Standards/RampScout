@@ -1,0 +1,80 @@
+{
+    "service": "s3",
+    "function": "list_buckets",
+    "fields": {
+        "Buckets": {
+            "fields": [
+                "Name",
+                "CreationDate",
+                "Owner",
+                "Region",
+                "Tags"
+            ],
+            "subresources": {
+                "LocationConstraint": {
+                    "function": "get_bucket_location",
+                    "relation_field": "Name",
+                    "fields": [
+                        "LocationConstraint"
+                    ],
+                    "detail_functions": {
+                        "LocationConstraint": {
+                            "permissions": "GetBucketLocation",
+                            "item_search_id": "Name",
+                            "detail_function": "get_bucket_location",
+                            "detail_param": "Bucket"
+                        }
+                    }
+                },
+                "ServerSideEncryptionConfiguration": {
+                    "function": "get_bucket_encryption",
+                    "relation_field": "Name",
+                    "fields": [
+                        "Rules"
+                    ],
+                    "detail_functions": {
+                        "ServerSideEncryptionConfiguration": {
+                            "permissions": "GetEncryptionConfiguration",
+                            "item_search_id": "Name",
+                            "detail_function": "get_bucket_encryption",
+                            "detail_param": "Bucket"
+                        }
+                    }
+                },
+                "Website": {
+                    "function": "get_bucket_website",
+                    "relation_field": "Name",
+                    "fields": [
+                        "RedirectAllRequestsTo",
+                        "IndexDocument",
+                        "ErrorDocument",
+                        "RoutingRules"
+                    ],
+                    "detail_functions": {
+                        "Website": {
+                            "permissions": "GetBucketWebsite",
+                            "item_search_id": "Name",
+                            "detail_function": "get_bucket_website",
+                            "detail_param": "Bucket"
+                        }
+                    }
+                },
+                "TagSet": {
+                    "function": "get_bucket_tagging",
+                    "relation_field": "Name",
+                    "fields": [
+                        "TagSet"
+                    ],
+                    "detail_functions": {
+                        "TagSet": {
+                            "permissions": "GetBucketTagging",
+                            "item_search_id": "Name",
+                            "detail_function": "get_bucket_tagging",
+                            "detail_param": "Bucket"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

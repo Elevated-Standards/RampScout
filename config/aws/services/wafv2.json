@@ -1,0 +1,121 @@
+{
+    "service": "wafv2",
+    "function": "list_web_acls",
+    "fields": {
+        "WebACLs": {
+            "fields": [
+                "ARN",
+                "Name",
+                "Id",
+                "Description",
+                "Capacity",
+                "CloudWatchMetricsEnabled",
+                "SampledRequestsEnabled",
+                "ManagedByFirewallManager",
+                "CreatedAt",
+                "LastModifiedAt",
+                "Scope",
+                "Tags"
+            ],
+            "subresources": {
+                "WebACLDetails": {
+                    "function": "get_web_acl",
+                    "relation_field": "ARN",
+                    "fields": [
+                        "ARN",
+                        "Name",
+                        "Id",
+                        "Description",
+                        "Capacity",
+                        "Rules",
+                        "DefaultAction",
+                        "VisibilityConfig",
+                        "ManagedByFirewallManager",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "WebACL": {
+                            "permissions": "GetWebACL",
+                            "item_search_id": "ARN",
+                            "detail_function": "get_web_acl",
+                            "detail_param": "ARN"
+                        }
+                    }
+                },
+                "RuleGroups": {
+                    "function": "list_rule_groups",
+                    "relation_field": "Scope",
+                    "fields": [
+                        "ARN",
+                        "Name",
+                        "Id",
+                        "Capacity",
+                        "Description",
+                        "ManagedByFirewallManager",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "RuleGroupDetails": {
+                            "function": "get_rule_group",
+                            "relation_field": "ARN",
+                            "fields": [
+                                "ARN",
+                                "Name",
+                                "Id",
+                                "Capacity",
+                                "Rules",
+                                "VisibilityConfig",
+                                "ManagedByFirewallManager",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "RuleGroup": {
+                                    "permissions": "GetRuleGroup",
+                                    "item_search_id": "ARN",
+                                    "detail_function": "get_rule_group",
+                                    "detail_param": "ARN"
+                                }
+                            }
+                        }
+                    }
+                },
+                "IPSets": {
+                    "function": "list_ip_sets",
+                    "relation_field": "Scope",
+                    "fields": [
+                        "ARN",
+                        "Name",
+                        "Id",
+                        "Description",
+                        "IPAddressVersion",
+                        "Addresses",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "IPSetDetails": {
+                            "function": "get_ip_set",
+                            "relation_field": "ARN",
+                            "fields": [
+                                "ARN",
+                                "Name",
+                                "Id",
+                                "IPAddressVersion",
+                                "Addresses",
+                                "Description",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "IPSet": {
+                                    "permissions": "GetIPSet",
+                                    "item_search_id": "ARN",
+                                    "detail_function": "get_ip_set",
+                                    "detail_param": "ARN"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,130 @@
+{
+    "service": "waf",
+    "function": "list_web_acls",
+    "fields": {
+        "WebACLs": {
+            "fields": [
+                "WebACLId",
+                "Name",
+                "MetricName",
+                "DefaultAction",
+                "Rules",
+                "CreatedAt",
+                "UpdatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "WebACLDetails": {
+                    "function": "get_web_acl",
+                    "relation_field": "WebACLId",
+                    "fields": [
+                        "WebACLId",
+                        "Name",
+                        "MetricName",
+                        "DefaultAction",
+                        "Rules",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "WebACL": {
+                            "permissions": "GetWebACL",
+                            "item_search_id": "WebACLId",
+                            "detail_function": "get_web_acl",
+                            "detail_param": "WebACLId"
+                        }
+                    }
+                },
+                "RuleDetails": {
+                    "function": "list_rules",
+                    "relation_field": "WebACLId",
+                    "fields": [
+                        "RuleId",
+                        "Name",
+                        "MetricName",
+                        "Predicates",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "RuleConfig": {
+                            "function": "get_rule",
+                            "relation_field": "RuleId",
+                            "fields": [
+                                "RuleId",
+                                "Name",
+                                "MetricName",
+                                "Predicates",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Rule": {
+                                    "permissions": "GetRule",
+                                    "item_search_id": "RuleId",
+                                    "detail_function": "get_rule",
+                                    "detail_param": "RuleId"
+                                }
+                            }
+                        }
+                    }
+                },
+                "IPSetDetails": {
+                    "function": "list_ip_sets",
+                    "fields": [
+                        "IPSetId",
+                        "Name",
+                        "IPSetDescriptors",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "IPSetConfig": {
+                            "function": "get_ip_set",
+                            "relation_field": "IPSetId",
+                            "fields": [
+                                "IPSetId",
+                                "Name",
+                                "IPSetDescriptors",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "IPSet": {
+                                    "permissions": "GetIPSet",
+                                    "item_search_id": "IPSetId",
+                                    "detail_function": "get_ip_set",
+                                    "detail_param": "IPSetId"
+                                }
+                            }
+                        }
+                    }
+                },
+                "ByteMatchSets": {
+                    "function": "list_byte_match_sets",
+                    "fields": [
+                        "ByteMatchSetId",
+                        "Name",
+                        "ByteMatchTuples",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "ByteMatchSetConfig": {
+                            "function": "get_byte_match_set",
+                            "relation_field": "ByteMatchSetId",
+                            "fields": [
+                                "ByteMatchSetId",
+                                "Name",
+                                "ByteMatchTuples",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "ByteMatchSet": {
+                                    "permissions": "GetByteMatchSet",
+                                    "item_search_id": "ByteMatchSetId",
+                                    "detail_function": "get_byte_match_set",
+                                    "detail_param": "ByteMatchSetId"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

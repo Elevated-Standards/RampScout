@@ -1,0 +1,53 @@
+{
+    "service": "sqs",
+    "function": "list_queues",
+    "fields": {
+        "QueueUrls": {
+            "fields": [
+                "QueueUrl"
+            ],
+            "subresources": {
+                "Attributes": {
+                    "function": "get_queue_attributes",
+                    "relation_field": "QueueUrl",
+                    "fields": [
+                        "ApproximateNumberOfMessages",
+                        "ApproximateNumberOfMessagesDelayed",
+                        "ApproximateNumberOfMessagesNotVisible",
+                        "CreatedTimestamp",
+                        "LastModifiedTimestamp",
+                        "VisibilityTimeout",
+                        "MaximumMessageSize",
+                        "MessageRetentionPeriod",
+                        "QueueArn",
+                        "DelaySeconds",
+                        "ReceiveMessageWaitTimeSeconds"
+                    ],
+                    "detail_functions": {
+                        "Attributes": {
+                            "permissions": "GetQueueAttributes",
+                            "item_search_id": "QueueUrls",
+                            "detail_function": "get_queue_attributes",
+                            "detail_param": "QueueUrl"
+                        }
+                    }
+                },
+                "Tags": {
+                    "function": "list_queue_tags",
+                    "relation_field": "QueueUrl",
+                    "fields": [
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Tags": {
+                            "permissions": "ListQueueTags",
+                            "item_search_id": "QueueUrls",
+                            "detail_function": "list_queue_tags",
+                            "detail_param": "QueueUrl"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

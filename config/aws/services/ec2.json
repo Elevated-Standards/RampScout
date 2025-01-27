@@ -1,0 +1,163 @@
+[
+    {
+        "service": "ec2",
+        "function": "describe_instances",
+        "fields": {
+            "Instances": {
+                "fields": [
+                    "InstanceId",
+                    "InstanceType",
+                    "KeyName",
+                    "PrivateIpAddress",
+                    "PublicIpAddress",
+                    "State.Name",
+                    "Tags"
+                ],
+                "subresources": {
+                    "Volumes": {
+                        "function": "describe_volumes",
+                        "relation_field": "BlockDeviceMappings[].Ebs.VolumeId",
+                        "fields": [
+                            "VolumeId",
+                            "Size",
+                            "State",
+                            "CreateTime",
+                            "Tags"
+                        ]
+                    },
+                    "NetworkInterfaces": {
+                        "function": "describe_network_interfaces",
+                        "relation_field": "NetworkInterfaces[].NetworkInterfaceId",
+                        "fields": [
+                            "NetworkInterfaceId",
+                            "PrivateIpAddress",
+                            "SubnetId",
+                            "VpcId",
+                            "Status",
+                            "Tags"
+                        ]
+                    },
+                    "SecurityGroups": {
+                        "function": "describe_security_groups",
+                        "relation_field": "SecurityGroups[].GroupId",
+                        "fields": [
+                            "GroupId",
+                            "GroupName",
+                            "VpcId",
+                            "Tags"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    {
+        "service": "ec2",
+        "function": "describe_vpcs",
+        "fields": {
+            "Vpcs": {
+                "fields": [
+                    "VpcId",
+                    "State",
+                    "CidrBlock",
+                    "Tags"
+                ],
+                "subresources": {
+                    "Subnets": {
+                        "function": "describe_subnets",
+                        "relation_field": "VpcId",
+                        "fields": [
+                            "SubnetId",
+                            "State",
+                            "CidrBlock",
+                            "VpcId",
+                            "Tags"
+                        ]
+                    },
+                    "RouteTables": {
+                        "function": "describe_route_tables",
+                        "relation_field": "VpcId",
+                        "fields": [
+                            "RouteTableId",
+                            "VpcId",
+                            "Routes",
+                            "Associations",
+                            "Tags"
+                        ]
+                    },
+                    "InternetGateways": {
+                        "function": "describe_internet_gateways",
+                        "relation_field": "Attachments[].VpcId",
+                        "fields": [
+                            "InternetGatewayId",
+                            "Attachments",
+                            "Tags"
+                        ]
+                    },
+                    "NatGateways": {
+                        "function": "describe_nat_gateways",
+                        "relation_field": "VpcId",
+                        "fields": [
+                            "NatGatewayId",
+                            "SubnetId",
+                            "VpcId",
+                            "State",
+                            "Tags"
+                        ]
+                    },
+                    "NetworkAcls": {
+                        "function": "describe_network_acls",
+                        "relation_field": "VpcId",
+                        "fields": [
+                            "NetworkAclId",
+                            "VpcId",
+                            "Entries",
+                            "Associations",
+                            "Tags"
+                        ]
+                    },
+                    "SecurityGroups": {
+                        "function": "describe_security_groups",
+                        "relation_field": "VpcId",
+                        "fields": [
+                            "GroupId",
+                            "GroupName",
+                            "VpcId",
+                            "Tags"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    {
+        "service": "ec2",
+        "function": "describe_account_attributes",
+        "fields": {
+            "AccountAttributes": {
+                "fields": [
+                    "AttributeName",
+                    "AttributeValues"
+                ],
+                "subresources": {
+                    "AvailabilityZones": {
+                        "function": "describe_availability_zones",
+                        "fields": [
+                            "ZoneName",
+                            "State",
+                            "RegionName",
+                            "Messages"
+                        ]
+                    },
+                    "Regions": {
+                        "function": "describe_regions",
+                        "fields": [
+                            "RegionName",
+                            "Endpoint"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+]

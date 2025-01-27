@@ -1,0 +1,68 @@
+{
+    "service": "apigateway",
+    "function": "get_rest_apis",
+    "fields": {
+        "RestApis": {
+            "fields": [
+                "Id",
+                "Name",
+                "Description",
+                "CreatedDate",
+                "Version",
+                "Warnings",
+                "ApiKeySource",
+                "EndpointConfiguration",
+                "Tags"
+            ],
+            "subresources": {
+                "Resources": {
+                    "function": "get_resources",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "ParentId",
+                        "Path",
+                        "PathPart",
+                        "ResourceMethods"
+                    ]
+                },
+                "Stages": {
+                    "function": "get_stages",
+                    "relation_field": "Id",
+                    "fields": [
+                        "StageName",
+                        "DeploymentId",
+                        "Description",
+                        "CreatedDate",
+                        "LastUpdatedDate",
+                        "MethodSettings",
+                        "Variables",
+                        "Tags"
+                    ]
+                },
+                "Deployments": {
+                    "function": "get_deployments",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "CreatedDate",
+                        "Description"
+                    ]
+                },
+                "UsagePlans": {
+                    "function": "get_usage_plans",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Name",
+                        "Description",
+                        "ApiStages",
+                        "Quota",
+                        "Throttle",
+                        "Tags"
+                    ]
+                }
+            }
+        }
+    }
+}

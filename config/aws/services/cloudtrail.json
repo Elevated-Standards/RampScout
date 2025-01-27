@@ -1,0 +1,21 @@
+{
+    "service": "cloudtrail",
+    "function": "describe_trails",
+    "fields": {
+        "Trails": {
+            "fields": [
+                "Name",
+                "TrailARN",
+                "HomeRegion",
+                "IsMultiRegionTrail",
+                "LogFileValidationEnabled",
+                "CloudWatchLogsRoleArn",
+                "CloudWatchLogsLogGroupArn",
+                "S3BucketName",
+                "S3KeyPrefix",
+                "KmsKeyId",
+                "Tags"
+            ]
+        }
+    }
+}

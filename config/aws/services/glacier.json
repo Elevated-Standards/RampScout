@@ -1,0 +1,25 @@
+{
+    "service": "glacier",
+    "function": "list_vaults",
+    "fields": {
+        "VaultList": {
+            "fields": [
+                "VaultName",
+                "VaultARN",
+                "CreationDate",
+                "LastInventoryDate",
+                "NumberOfArchives",
+                "SizeInBytes",
+                "Tags"
+            ]
+        },
+        "ProvisionedCapacityList": {
+            "function": "list_provisioned_capacity",
+            "fields": [
+                "CapacityId",
+                "StartDate",
+                "ExpirationDate"
+            ]
+        }
+    }
+}

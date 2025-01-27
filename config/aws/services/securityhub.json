@@ -1,0 +1,73 @@
+{
+    "service": "securityhub",
+    "function": "get_enabled_standards",
+    "fields": {
+        "StandardsSubscriptions": {
+            "fields": [
+                "StandardsSubscriptionArn",
+                "StandardsArn",
+                "StandardsStatus",
+                "StandardsInput",
+                "Tags"
+            ],
+            "subresources": {
+                "Findings": {
+                    "function": "get_findings",
+                    "fields": [
+                        "Id",
+                        "ProductArn",
+                        "AwsAccountId",
+                        "CreatedAt",
+                        "UpdatedAt",
+                        "Severity",
+                        "Title",
+                        "Description",
+                        "Remediation",
+                        "Compliance",
+                        "Workflow",
+                        "RecordState",
+                        "Tags"
+                    ]
+                },
+                "Members": {
+                    "function": "list_members",
+                    "fields": [
+                        "AccountId",
+                        "MasterId",
+                        "Email",
+                        "MemberStatus",
+                        "InvitedAt",
+                        "UpdatedAt"
+                    ]
+                },
+                "InsightResults": {
+                    "function": "list_insights",
+                    "fields": [
+                        "InsightArn",
+                        "Name",
+                        "Filters",
+                        "GroupByAttribute"
+                    ],
+                    "subresources": {
+                        "InsightDetails": {
+                            "function": "get_insight_results",
+                            "relation_field": "InsightArn",
+                            "fields": [
+                                "InsightArn",
+                                "ResultValues"
+                            ],
+                            "detail_functions": {
+                                "InsightResult": {
+                                    "permissions": "GetInsightResults",
+                                    "item_search_id": "InsightArn",
+                                    "detail_function": "get_insight_results",
+                                    "detail_param": "InsightArn"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

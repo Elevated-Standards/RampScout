@@ -1,0 +1,90 @@
+{
+    "service": "lightsail",
+    "function": "get_instances",
+    "fields": {
+        "Instances": {
+            "fields": [
+                "InstanceName",
+                "Arn",
+                "BlueprintId",
+                "BundleId",
+                "PrivateIpAddress",
+                "PublicIpAddress",
+                "State",
+                "CreatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "InstanceDetails": {
+                    "function": "get_instance",
+                    "relation_field": "InstanceName",
+                    "fields": [
+                        "InstanceName",
+                        "Arn",
+                        "BlueprintId",
+                        "BundleId",
+                        "CpuCount",
+                        "RamSizeInGb",
+                        "DiskSizeInGb",
+                        "PrivateIpAddress",
+                        "PublicIpAddress",
+                        "State",
+                        "CreatedAt",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Instance": {
+                            "permissions": "GetInstance",
+                            "item_search_id": "InstanceName",
+                            "detail_function": "get_instance",
+                            "detail_param": "InstanceName"
+                        }
+                    }
+                }
+            }
+        },
+        "Databases": {
+            "function": "get_relational_databases",
+            "fields": [
+                "RelationalDatabaseName",
+                "Arn",
+                "Engine",
+                "EngineVersion",
+                "State",
+                "MasterUsername",
+                "PubliclyAccessible",
+                "CreatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "DatabaseDetails": {
+                    "function": "get_relational_database",
+                    "relation_field": "RelationalDatabaseName",
+                    "fields": [
+                        "RelationalDatabaseName",
+                        "Arn",
+                        "Engine",
+                        "EngineVersion",
+                        "MasterUsername",
+                        "BackupRetentionEnabled",
+                        "PubliclyAccessible",
+                        "State",
+                        "AllocatedStorageInGb",
+                        "CpuCount",
+                        "RamSizeInGb",
+                        "CreatedAt",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Database": {
+                            "permissions": "GetRelationalDatabase",
+                            "item_search_id": "RelationalDatabaseName",
+                            "detail_function": "get_relational_database",
+                            "detail_param": "RelationalDatabaseName"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

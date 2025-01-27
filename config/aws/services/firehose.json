@@ -1,0 +1,82 @@
+{
+    "service": "firehose",
+    "function": "list_delivery_streams",
+    "fields": {
+        "DeliveryStreams": {
+            "fields": [
+                "DeliveryStreamName",
+                "DeliveryStreamArn",
+                "DeliveryStreamType",
+                "VersionId",
+                "CreateTimestamp",
+                "LastUpdateTimestamp",
+                "DeliveryStreamStatus",
+                "Tags"
+            ],
+            "subresources": {
+                "StreamDetails": {
+                    "function": "describe_delivery_stream",
+                    "relation_field": "DeliveryStreamName",
+                    "fields": [
+                        "DeliveryStreamName",
+                        "DeliveryStreamArn",
+                        "DeliveryStreamStatus",
+                        "DeliveryStreamType",
+                        "VersionId",
+                        "CreateTimestamp",
+                        "LastUpdateTimestamp",
+                        "Source",
+                        "Destinations",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Stream": {
+                            "permissions": "DescribeDeliveryStream",
+                            "item_search_id": "DeliveryStreamName",
+                            "detail_function": "describe_delivery_stream",
+                            "detail_param": "DeliveryStreamName"
+                        }
+                    }
+                },
+                "Destinations": {
+                    "function": "describe_delivery_stream",
+                    "relation_field": "DeliveryStreamName",
+                    "fields": [
+                        "DestinationId",
+                        "S3DestinationDescription",
+                        "ExtendedS3DestinationDescription",
+                        "RedshiftDestinationDescription",
+                        "ElasticsearchDestinationDescription",
+                        "HttpEndpointDestinationDescription",
+                        "SplunkDestinationDescription",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "DestinationDetails": {
+                            "function": "describe_delivery_stream",
+                            "relation_field": "DestinationId",
+                            "fields": [
+                                "DestinationId",
+                                "S3DestinationDescription",
+                                "ExtendedS3DestinationDescription",
+                                "RedshiftDestinationDescription",
+                                "ElasticsearchDestinationDescription",
+                                "HttpEndpointDestinationDescription",
+                                "SplunkDestinationDescription",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Destination": {
+                                    "permissions": "DescribeDeliveryStream",
+                                    "item_search_id": "DestinationId",
+                                    "detail_function": "describe_delivery_stream",
+                                    "detail_param": "DeliveryStreamName"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,55 @@
+{
+    "service": "fsx",
+    "function": "describe_file_systems",
+    "fields": {
+        "FileSystems": {
+            "fields": [
+                "FileSystemId",
+                "FileSystemType",
+                "Lifecycle",
+                "StorageCapacity",
+                "CreationTime",
+                "KmsKeyId",
+                "VpcId",
+                "SubnetIds",
+                "Tags"
+            ]
+        },
+        "Backups": {
+            "function": "describe_backups",
+            "fields": [
+                "BackupId",
+                "FileSystemId",
+                "Lifecycle",
+                "ProgressPercent",
+                "CreationTime",
+                "KmsKeyId",
+                "Tags"
+            ]
+        },
+        "Volumes": {
+            "function": "describe_volumes",
+            "fields": [
+                "VolumeId",
+                "FileSystemId",
+                "Lifecycle",
+                "VolumeType",
+                "SizeInBytes",
+                "CreationTime",
+                "Tags"
+            ]
+        },
+        "StorageVirtualMachines": {
+            "function": "describe_storage_virtual_machines",
+            "fields": [
+                "StorageVirtualMachineId",
+                "FileSystemId",
+                "Lifecycle",
+                "Subtype",
+                "Endpoints",
+                "CreationTime",
+                "Tags"
+            ]
+        }
+    }
+}

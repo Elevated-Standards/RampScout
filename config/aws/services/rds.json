@@ -1,0 +1,65 @@
+{
+    "service": "rds",
+    "function": "describe_db_instances",
+    "fields": {
+        "DBInstances": {
+            "fields": [
+                "DBInstanceIdentifier",
+                "DBInstanceArn",
+                "DBInstanceClass",
+                "Engine",
+                "EngineVersion",
+                "DBInstanceStatus",
+                "AvailabilityZone",
+                "VpcId",
+                "PubliclyAccessible",
+                "StorageType",
+                "AllocatedStorage",
+                "BackupRetentionPeriod",
+                "Tags"
+            ],
+            "subresources": {
+                "DBClusters": {
+                    "function": "describe_db_clusters",
+                    "fields": [
+                        "DBClusterIdentifier",
+                        "DBClusterArn",
+                        "Status",
+                        "Engine",
+                        "EngineVersion",
+                        "Endpoint",
+                        "ReaderEndpoint",
+                        "MultiAZ",
+                        "StorageEncrypted",
+                        "VpcId",
+                        "Tags"
+                    ]
+                },
+                "DBSnapshots": {
+                    "function": "describe_db_snapshots",
+                    "fields": [
+                        "DBSnapshotIdentifier",
+                        "DBSnapshotArn",
+                        "DBInstanceIdentifier",
+                        "SnapshotType",
+                        "Status",
+                        "StorageType",
+                        "AllocatedStorage",
+                        "VpcId",
+                        "Tags"
+                    ]
+                },
+                "DBSubnetGroups": {
+                    "function": "describe_db_subnet_groups",
+                    "fields": [
+                        "DBSubnetGroupName",
+                        "DBSubnetGroupDescription",
+                        "VpcId",
+                        "Subnets",
+                        "Tags"
+                    ]
+                }
+            }
+        }
+    }
+}

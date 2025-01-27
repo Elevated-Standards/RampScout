@@ -1,0 +1,61 @@
+{
+    "service": "route53",
+    "function": "list_hosted_zones",
+    "fields": {
+        "HostedZones": {
+            "fields": [
+                "Id",
+                "Name",
+                "CallerReference",
+                "Config",
+                "ResourceRecordSetCount",
+                "LinkedService",
+                "Tags"
+            ]
+        },
+        "HealthChecks": {
+            "function": "list_health_checks",
+            "fields": [
+                "Id",
+                "CallerReference",
+                "HealthCheckConfig",
+                "HealthCheckVersion",
+                "LinkedService",
+                "Tags"
+            ]
+        },
+        "TrafficPolicies": {
+            "function": "list_traffic_policies",
+            "fields": [
+                "Id",
+                "Name",
+                "Document",
+                "Type",
+                "Comment",
+                "Tags"
+            ]
+        },
+        "TrafficPolicyInstances": {
+            "function": "list_traffic_policy_instances",
+            "fields": [
+                "Id",
+                "HostedZoneId",
+                "Name",
+                "TTL",
+                "State",
+                "TrafficPolicyId",
+                "TrafficPolicyVersion"
+            ]
+        },
+        "TrafficPolicyVersions": {
+            "function": "list_traffic_policy_versions",
+            "fields": [
+                "TrafficPolicyId",
+                "Version",
+                "Document",
+                "Type",
+                "Comment"
+            ]
+        }
+    }
+}

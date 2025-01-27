@@ -1,0 +1,67 @@
+{
+    "service": "sns",
+    "function": "list_topics",
+    "fields": {
+        "Topics": {
+            "fields": [
+                "TopicArn"
+            ],
+            "subresources": {
+                "Attributes": {
+                    "function": "get_topic_attributes",
+                    "relation_field": "TopicArn",
+                    "fields": [
+                        "Owner",
+                        "Policy",
+                        "DisplayName",
+                        "SubscriptionsConfirmed",
+                        "SubscriptionsPending",
+                        "SubscriptionsDeleted",
+                        "EffectiveDeliveryPolicy",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Attributes": {
+                            "permissions": "GetTopicAttributes",
+                            "item_search_id": "TopicArn",
+                            "detail_function": "get_topic_attributes",
+                            "detail_param": "TopicArn"
+                        }
+                    }
+                }
+            }
+        },
+        "Subscriptions": {
+            "function": "list_subscriptions",
+            "fields": [
+                "SubscriptionArn",
+                "Owner",
+                "Protocol",
+                "Endpoint",
+                "TopicArn"
+            ],
+            "subresources": {
+                "Attributes": {
+                    "function": "get_subscription_attributes",
+                    "relation_field": "SubscriptionArn",
+                    "fields": [
+                        "SubscriptionArn",
+                        "Owner",
+                        "Protocol",
+                        "Endpoint",
+                        "TopicArn",
+                        "EffectiveDeliveryPolicy"
+                    ],
+                    "detail_functions": {
+                        "Attributes": {
+                            "permissions": "GetSubscriptionAttributes",
+                            "item_search_id": "SubscriptionArn",
+                            "detail_function": "get_subscription_attributes",
+                            "detail_param": "SubscriptionArn"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,79 @@
+{
+    "service": "ec2",
+    "function": "describe_flow_logs",
+    "fields": {
+        "FlowLogs": {
+            "fields": [
+                "FlowLogId",
+                "ResourceId",
+                "ResourceType",
+                "LogGroupName",
+                "TrafficType",
+                "LogDestinationType",
+                "LogDestination",
+                "LogFormat",
+                "DeliverLogsStatus",
+                "DeliverLogsErrorMessage",
+                "DeliverLogsPermissionArn",
+                "CreatedAt",
+                "Tags"
+            ],
+            "subresources": {
+                "LogGroupDetails": {
+                    "service": "logs",
+                    "function": "describe_log_groups",
+                    "relation_field": "LogGroupName",
+                    "fields": [
+                        "LogGroupName",
+                        "Arn",
+                        "CreationTime",
+                        "RetentionInDays",
+                        "MetricFilterCount",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "LogStreamDetails": {
+                            "function": "describe_log_streams",
+                            "relation_field": "LogGroupName",
+                            "fields": [
+                                "LogStreamName",
+                                "Arn",
+                                "CreationTime",
+                                "FirstEventTimestamp",
+                                "LastEventTimestamp",
+                                "StoredBytes"
+                            ],
+                            "detail_functions": {
+                                "LogStream": {
+                                    "permissions": "GetLogStream",
+                                    "item_search_id": "LogStreamName",
+                                    "detail_function": "get_log_stream",
+                                    "detail_param": "LogStreamName"
+                                }
+                            }
+                        }
+                    }
+                },
+                "CapturedTraffic": {
+                    "service": "logs",
+                    "function": "filter_log_events",
+                    "relation_field": "LogGroupName",
+                    "fields": [
+                        "LogStreamName",
+                        "Timestamp",
+                        "Message",
+                        "EventId"
+                    ],
+                    "detail_functions": {
+                        "CapturedEvent": {
+                            "permissions": "FilterLogEvents",
+                            "item_search_id": "LogStreamName",
+                            "detail_function": "filter_log_events",
+                            "detail_param": "LogStreamName"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

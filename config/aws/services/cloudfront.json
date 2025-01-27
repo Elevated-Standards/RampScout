@@ -1,0 +1,64 @@
+{
+    "service": "cloudfront",
+    "function": "list_distributions",
+    "fields": {
+        "Distributions": {
+            "fields": [
+                "Id",
+                "ARN",
+                "Status",
+                "LastModifiedTime",
+                "DomainName",
+                "OriginGroups",
+                "Origins",
+                "DefaultCacheBehavior",
+                "CacheBehaviors",
+                "PriceClass",
+                "Enabled",
+                "ViewerCertificate",
+                "Logging",
+                "Tags"
+            ],
+            "subresources": {
+                "DistributionConfig": {
+                    "function": "get_distribution_config",
+                    "relation_field": "Id",
+                    "fields": [
+                        "ETag",
+                        "Id",
+                        "ARN",
+                        "Origins",
+                        "OriginGroups",
+                        "DefaultCacheBehavior",
+                        "CacheBehaviors",
+                        "Logging",
+                        "ViewerCertificate",
+                        "Restrictions",
+                        "PriceClass",
+                        "Enabled",
+                        "WebACLId",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "DistributionConfig": {
+                            "permissions": "GetDistributionConfig",
+                            "item_search_id": "Id",
+                            "detail_function": "get_distribution_config",
+                            "detail_param": "Id"
+                        }
+                    }
+                },
+                "Invalidations": {
+                    "function": "list_invalidations",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Status",
+                        "CreateTime",
+                        "InvalidationBatch"
+                    ]
+                }
+            }
+        }
+    }
+}

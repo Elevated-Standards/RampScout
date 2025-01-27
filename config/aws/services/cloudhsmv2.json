@@ -1,0 +1,18 @@
+{
+    "service": "cloudhsmv2",
+    "function": "describe_clusters",
+    "fields": {
+        "Clusters": {
+            "fields": [
+                "ClusterId",
+                "State",
+                "HsmType",
+                "SubnetMapping",
+                "VpcId",
+                "BackupPolicy",
+                "Certificates",
+                "Tags"
+            ]
+        }
+    }
+}

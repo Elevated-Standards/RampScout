@@ -1,0 +1,48 @@
+{
+    "service": "lambda",
+    "function": "list_functions",
+    "fields": {
+        "Functions": {
+            "fields": [
+                "FunctionName",
+                "FunctionArn",
+                "Runtime",
+                "Handler",
+                "MemorySize",
+                "Timeout",
+                "Role",
+                "LastModified",
+                "Tags"
+            ],
+            "subresources": {
+                "FunctionDetails": {
+                    "function": "get_function",
+                    "relation_field": "FunctionArn",
+                    "fields": [
+                        "Configuration.FunctionName",
+                        "Configuration.FunctionArn",
+                        "Configuration.Runtime",
+                        "Configuration.Role",
+                        "Configuration.Handler",
+                        "Configuration.CodeSize",
+                        "Configuration.Description",
+                        "Configuration.Timeout",
+                        "Configuration.MemorySize",
+                        "Configuration.LastModified",
+                        "Code.RepositoryType",
+                        "Code.Location",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Function": {
+                            "permissions": "GetFunction",
+                            "item_search_id": "FunctionArn",
+                            "detail_function": "get_function",
+                            "detail_param": "FunctionArn"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

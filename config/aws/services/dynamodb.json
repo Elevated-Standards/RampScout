@@ -1,0 +1,128 @@
+{
+    "service": "dynamodb",
+    "function": "list_tables",
+    "fields": {
+        "Tables": {
+            "fields": [
+                "TableName"
+            ],
+            "subresources": {
+                "TableDetails": {
+                    "function": "describe_table",
+                    "relation_field": "TableName",
+                    "fields": [
+                        "TableName",
+                        "TableArn",
+                        "TableStatus",
+                        "ProvisionedThroughput",
+                        "KeySchema",
+                        "ItemCount",
+                        "TableSizeBytes",
+                        "CreationDateTime",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Table": {
+                            "permissions": "DescribeTable",
+                            "item_search_id": "TableName",
+                            "detail_function": "describe_table",
+                            "detail_param": "TableName"
+                        }
+                    }
+                }
+            }
+        },
+        "GlobalTables": {
+            "function": "list_global_tables",
+            "fields": [
+                "GlobalTableName"
+            ],
+            "subresources": {
+                "GlobalTableDetails": {
+                    "function": "describe_global_table",
+                    "relation_field": "GlobalTableName",
+                    "fields": [
+                        "GlobalTableName",
+                        "GlobalTableArn",
+                        "ReplicationGroup",
+                        "CreationDateTime"
+                    ],
+                    "detail_functions": {
+                        "GlobalTable": {
+                            "permissions": "DescribeGlobalTable",
+                            "item_search_id": "GlobalTableName",
+                            "detail_function": "describe_global_table",
+                            "detail_param": "GlobalTableName"
+                        }
+                    }
+                }
+            }
+        },
+        "Backups": {
+            "function": "list_backups",
+            "fields": [
+                "BackupArn",
+                "BackupName",
+                "TableName",
+                "BackupStatus",
+                "BackupType",
+                "BackupCreationDateTime",
+                "BackupSizeBytes"
+            ],
+            "subresources": {
+                "BackupDetails": {
+                    "function": "describe_backup",
+                    "relation_field": "BackupArn",
+                    "fields": [
+                        "BackupArn",
+                        "BackupName",
+                        "BackupStatus",
+                        "BackupType",
+                        "BackupCreationDateTime",
+                        "BackupSizeBytes",
+                        "TableName"
+                    ],
+                    "detail_functions": {
+                        "Backup": {
+                            "permissions": "DescribeBackup",
+                            "item_search_id": "BackupArn",
+                            "detail_function": "describe_backup",
+                            "detail_param": "BackupArn"
+                        }
+                    }
+                }
+            }
+        },
+        "Restore": {
+            "function": "list_restores",
+            "fields": [
+                "RestoreArn",
+                "TableName",
+                "RestoreDateTime",
+                "RestoreInProgress"
+            ],
+            "subresources": {
+                "RestoreDetails": {
+                    "function": "describe_continuous_backups",
+                    "relation_field": "RestoreArn",
+                    "fields": [
+                        "RestoreArn",
+                        "TableName",
+                        "ContinuousBackupsStatus",
+                        "PointInTimeRecoveryStatus",
+                        "RestoreDateTime",
+                        "RestoreInProgress"
+                    ],
+                    "detail_functions": {
+                        "Restore": {
+                            "permissions": "DescribeContinuousBackups",
+                            "item_search_id": "RestoreArn",
+                            "detail_function": "describe_continuous_backups",
+                            "detail_param": "RestoreArn"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

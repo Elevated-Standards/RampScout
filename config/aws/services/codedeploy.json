@@ -1,0 +1,110 @@
+{
+    "service": "codedeploy",
+    "function": "list_applications",
+    "fields": {
+        "Applications": {
+            "fields": [
+                "ApplicationName",
+                "ApplicationId",
+                "ComputePlatform",
+                "Tags"
+            ],
+            "subresources": {
+                "ApplicationDetails": {
+                    "function": "get_application",
+                    "relation_field": "ApplicationName",
+                    "fields": [
+                        "ApplicationName",
+                        "ApplicationId",
+                        "ComputePlatform",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Application": {
+                            "permissions": "GetApplication",
+                            "item_search_id": "ApplicationName",
+                            "detail_function": "get_application",
+                            "detail_param": "ApplicationName"
+                        }
+                    }
+                },
+                "Deployments": {
+                    "function": "list_deployments",
+                    "relation_field": "ApplicationName",
+                    "fields": [
+                        "DeploymentId",
+                        "ApplicationName",
+                        "DeploymentGroupName",
+                        "CreateTime",
+                        "CompleteTime",
+                        "Status",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "DeploymentDetails": {
+                            "function": "get_deployment",
+                            "relation_field": "DeploymentId",
+                            "fields": [
+                                "DeploymentId",
+                                "ApplicationName",
+                                "DeploymentGroupName",
+                                "Status",
+                                "CreateTime",
+                                "CompleteTime",
+                                "DeploymentConfigName",
+                                "TargetInstances",
+                                "Revision",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Deployment": {
+                                    "permissions": "GetDeployment",
+                                    "item_search_id": "DeploymentId",
+                                    "detail_function": "get_deployment",
+                                    "detail_param": "DeploymentId"
+                                }
+                            }
+                        }
+                    }
+                },
+                "DeploymentGroups": {
+                    "function": "list_deployment_groups",
+                    "relation_field": "ApplicationName",
+                    "fields": [
+                        "DeploymentGroupName",
+                        "DeploymentGroupId",
+                        "ServiceRoleArn",
+                        "ComputePlatform",
+                        "Tags"
+                    ],
+                    "subresources": {
+                        "DeploymentGroupDetails": {
+                            "function": "get_deployment_group",
+                            "relation_field": "DeploymentGroupName",
+                            "fields": [
+                                "DeploymentGroupName",
+                                "DeploymentGroupId",
+                                "ApplicationName",
+                                "ServiceRoleArn",
+                                "ComputePlatform",
+                                "TargetRevision",
+                                "AutoScalingGroups",
+                                "DeploymentConfigName",
+                                "TriggerConfigurations",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "DeploymentGroup": {
+                                    "permissions": "GetDeploymentGroup",
+                                    "item_search_id": "DeploymentGroupName",
+                                    "detail_function": "get_deployment_group",
+                                    "detail_param": "DeploymentGroupName"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

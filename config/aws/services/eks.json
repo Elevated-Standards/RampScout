@@ -1,0 +1,99 @@
+{
+    "service": "eks",
+    "function": "list_clusters",
+    "fields": {
+        "Clusters": {
+            "fields": [
+                "ClusterName"
+            ],
+            "subresources": {
+                "ClusterDetails": {
+                    "function": "describe_cluster",
+                    "relation_field": "ClusterName",
+                    "fields": [
+                        "Name",
+                        "Arn",
+                        "Version",
+                        "RoleArn",
+                        "Status",
+                        "CreatedAt",
+                        "ResourcesVpcConfig",
+                        "Logging",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Cluster": {
+                            "permissions": "DescribeCluster",
+                            "item_search_id": "ClusterName",
+                            "detail_function": "describe_cluster",
+                            "detail_param": "ClusterName"
+                        }
+                    }
+                },
+                "Nodegroups": {
+                    "function": "list_nodegroups",
+                    "relation_field": "ClusterName",
+                    "fields": [
+                        "NodegroupName"
+                    ],
+                    "subresources": {
+                        "NodegroupDetails": {
+                            "function": "describe_nodegroup",
+                            "relation_field": "NodegroupName",
+                            "fields": [
+                                "NodegroupName",
+                                "NodegroupArn",
+                                "ClusterName",
+                                "Status",
+                                "AmiType",
+                                "ScalingConfig",
+                                "InstanceTypes",
+                                "CreatedAt",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "Nodegroup": {
+                                    "permissions": "DescribeNodegroup",
+                                    "item_search_id": "NodegroupName",
+                                    "detail_function": "describe_nodegroup",
+                                    "detail_param": "NodegroupName"
+                                }
+                            }
+                        }
+                    }
+                },
+                "FargateProfiles": {
+                    "function": "list_fargate_profiles",
+                    "relation_field": "ClusterName",
+                    "fields": [
+                        "FargateProfileName"
+                    ],
+                    "subresources": {
+                        "FargateProfileDetails": {
+                            "function": "describe_fargate_profile",
+                            "relation_field": "FargateProfileName",
+                            "fields": [
+                                "FargateProfileName",
+                                "FargateProfileArn",
+                                "ClusterName",
+                                "Status",
+                                "PodExecutionRoleArn",
+                                "Selectors",
+                                "CreatedAt",
+                                "Tags"
+                            ],
+                            "detail_functions": {
+                                "FargateProfile": {
+                                    "permissions": "DescribeFargateProfile",
+                                    "item_search_id": "FargateProfileName",
+                                    "detail_function": "describe_fargate_profile",
+                                    "detail_param": "FargateProfileName"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

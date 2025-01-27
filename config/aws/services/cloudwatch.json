@@ -1,0 +1,82 @@
+{
+    "service": "cloudwatch",
+    "function": "list_metrics",
+    "fields": {
+        "Metrics": {
+            "fields": [
+                "Namespace",
+                "MetricName",
+                "Dimensions"
+            ],
+            "subresources": {
+                "MetricDetails": {
+                    "function": "get_metric_data",
+                    "relation_field": "MetricName",
+                    "fields": [
+                        "Id",
+                        "Label",
+                        "Timestamps",
+                        "Values",
+                        "StatusCode",
+                        "Messages"
+                    ],
+                    "detail_functions": {
+                        "Metric": {
+                            "permissions": "GetMetricData",
+                            "item_search_id": "MetricName",
+                            "detail_function": "get_metric_data",
+                            "detail_param": "MetricName"
+                        }
+                    }
+                }
+            }
+        },
+        "Alarms": {
+            "function": "describe_alarms",
+            "fields": [
+                "AlarmName",
+                "AlarmArn",
+                "AlarmDescription",
+                "StateValue",
+                "StateReason",
+                "MetricName",
+                "Namespace",
+                "Dimensions",
+                "EvaluationPeriods",
+                "Threshold",
+                "ComparisonOperator",
+                "ActionsEnabled",
+                "AlarmActions",
+                "Tags"
+            ]
+        },
+        "DashboardList": {
+            "function": "list_dashboards",
+            "fields": [
+                "DashboardName",
+                "DashboardArn",
+                "LastModified"
+            ],
+            "subresources": {
+                "DashboardDetails": {
+                    "function": "get_dashboard",
+                    "relation_field": "DashboardName",
+                    "fields": [
+                        "DashboardArn",
+                        "DashboardName",
+                        "DashboardBody",
+                        "LastModified"
+                    ],
+                    "detail_functions": {
+                        "Dashboard": {
+                            "permissions": "GetDashboard",
+                            "item_search_id": "DashboardName",
+                            "detail_function": "get_dashboard",
+                            "detail_param": "DashboardName"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

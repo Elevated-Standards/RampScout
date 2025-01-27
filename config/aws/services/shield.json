@@ -1,0 +1,73 @@
+{
+    "service": "shield",
+    "function": "list_protections",
+    "fields": {
+        "Protections": {
+            "fields": [
+                "Id",
+                "Name",
+                "ResourceArn",
+                "HealthCheckIds",
+                "ProtectionArn",
+                "Tags"
+            ],
+            "subresources": {
+                "ProtectionDetails": {
+                    "function": "describe_protection",
+                    "relation_field": "Id",
+                    "fields": [
+                        "Id",
+                        "Name",
+                        "ResourceArn",
+                        "HealthCheckIds",
+                        "ProtectionArn",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "Protection": {
+                            "permissions": "DescribeProtection",
+                            "item_search_id": "Id",
+                            "detail_function": "describe_protection",
+                            "detail_param": "ProtectionId"
+                        }
+                    }
+                },
+                "AttackDetails": {
+                    "function": "list_attacks",
+                    "relation_field": "ResourceArn",
+                    "fields": [
+                        "AttackId",
+                        "ResourceArn",
+                        "StartTime",
+                        "EndTime",
+                        "AttackVectors",
+                        "Counters"
+                    ],
+                    "subresources": {
+                        "AttackInfo": {
+                            "function": "describe_attack",
+                            "relation_field": "AttackId",
+                            "fields": [
+                                "AttackId",
+                                "ResourceArn",
+                                "AttackVectors",
+                                "Counters",
+                                "StartTime",
+                                "EndTime",
+                                "AttackProperties"
+                            ],
+                            "detail_functions": {
+                                "Attack": {
+                                    "permissions": "DescribeAttack",
+                                    "item_search_id": "AttackId",
+                                    "detail_function": "describe_attack",
+                                    "detail_param": "AttackId"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

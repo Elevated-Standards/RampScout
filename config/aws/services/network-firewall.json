@@ -1,0 +1,60 @@
+{
+    "service": "network-firewall",
+    "function": "list_firewalls",
+    "fields": {
+        "Firewalls": {
+            "fields": [
+                "FirewallArn",
+                "FirewallName",
+                "FirewallPolicyArn",
+                "VpcId",
+                "SubnetMappings",
+                "DeleteProtection",
+                "FirewallStatus",
+                "Tags"
+            ],
+            "subresources": {
+                "FirewallPolicyDetails": {
+                    "function": "describe_firewall_policy",
+                    "relation_field": "FirewallPolicyArn",
+                    "fields": [
+                        "FirewallPolicyArn",
+                        "FirewallPolicyName",
+                        "StatelessRuleGroups",
+                        "StatefulRuleGroups",
+                        "Description",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "FirewallPolicy": {
+                            "permissions": "DescribeFirewallPolicy",
+                            "item_search_id": "FirewallPolicyArn",
+                            "detail_function": "describe_firewall_policy",
+                            "detail_param": "FirewallPolicyArn"
+                        }
+                    }
+                },
+                "RuleGroupDetails": {
+                    "function": "describe_rule_group",
+                    "relation_field": "StatelessRuleGroups.RuleGroupArn",
+                    "fields": [
+                        "RuleGroupArn",
+                        "RuleGroupName",
+                        "RuleGroupType",
+                        "Capacity",
+                        "RulesSource",
+                        "Tags"
+                    ],
+                    "detail_functions": {
+                        "RuleGroup": {
+                            "permissions": "DescribeRuleGroup",
+                            "item_search_id": "RuleGroupArn",
+                            "detail_function": "describe_rule_group",
+                            "detail_param": "RuleGroupArn"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
