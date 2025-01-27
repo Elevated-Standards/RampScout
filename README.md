@@ -5,6 +5,19 @@ This project generates a FedRAMP-aligned inventory of assets in different cloud 
 Example OutPut: [2025-01-10-Inventory.xlsx](output/2025/Jan/2025-01-10-Inventory.xlsx)
 
 
+## Features
+
+- Multithreading: Concurrently performs inventory operations to speed up data collection.
+- Service Coverage: Supports a wide range of AWS services, including EC2, S3, RDS, Lambda, and more.
+- Extendability: All resources and details inventory services are in JSON files.
+- Logging: Detailed logging of operations and errors for troubleshooting and auditing purposes. Ensures the existence of log and output directories, and creates a timestamped log file.
+
+Inventory Processes:
+- Retrieves all AWS regions and tests connectivity.
+- Creates a service structure based on IAM policy files.
+- Compiles and logs results, handles errors, and updates progress.
+- Output: Generates JSON files with the inventory results, including metadata if specified.
+
 
 ## Supported Cloud Providers
 
