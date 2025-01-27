@@ -2,10 +2,56 @@ name: AWS Auto Inventory
 
 on:
   workflow_dispatch:
+    push:
+      paths:
+        - '**/*.py'   # Python files
+        - '**/*.md'   # Markdown files
+        - '**/*.yml'  # YAML files
+        - '**/*.json' # JSON files
+
+jobs:
+  # Python-specific linting
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Run Python Linting
+        uses: oxsecurity/megalinter/flavors/python@v6.22.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLY_FIXES: true
+
+  # Mixed documentation linting
+  documentation:
+    runs-on: ubuntu-latest
+    needs: python
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Run Documentation Linting
+        uses: oxsecurity/megalinter/flavors/documentation@v6.22.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLY_FIXES: true
+
+  # Lightweight CI linting
+  ci_light:
+    runs-on: ubuntu-latest
+    needs: documentation
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Run Lightweight CI Linting
+        uses: oxsecurity/megalinter/flavors/ci_light@v6.22.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          APPLY_FIXES: true
 
 jobs:
   aws-scan:
     runs-on: ubuntu-latest
+    needs: ci_light
     permissions:
       contents: write
       pull-requests: write

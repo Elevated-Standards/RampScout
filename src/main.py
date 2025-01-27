@@ -2,20 +2,29 @@ import os
 import json
 import glob
 from datetime import datetime
-from utils.json_utils import load_json
+from utils.json_utils import load_json, load_column_mapping
 from utils.excel_utils import write_to_excel
 from processors import (
-    ec2_processor, rds_processor, s3_processor, 
-    elasticache_processor, kms_processor, lambda_processor, 
+    ec2_processor, rds_processor, s3_processor,
+    elasticache_processor, kms_processor, lambda_processor,
     elb_processor, eks_processor
 )
 
-def load_column_mapping(config_path):
+def load_aws_file_mapping(config_path):
     """
-    Load column mapping configuration from a JSON file.
+    Load AWS file mapping configuration from a JSON file.
     """
     with open(config_path, 'r') as f:
         return json.load(f)
+
+def generate_file_name(entry):
+    """
+    Generate a file name based on the AWS JSON entry.
+    Example: ec2-describe_route_tables.json
+    """
+    service = entry.get("service", "unknown_service")
+    function = entry.get("function", "unknown_function")
+    return f"{service}-{function}.json"
 
 def find_json_files(base_dir, file_name):
     """
@@ -25,46 +34,6 @@ def find_json_files(base_dir, file_name):
     search_pattern = os.path.join(base_dir, "**", file_name)
     matching_files = glob.glob(search_pattern, recursive=True)
     return matching_files[0] if matching_files else None
-
-def detect_cloud_provider(aws_json_files, gcp_json_files, azure_json_files, aws_enabled, gcp_enabled, azure_enabled):
-    """
-    Detect the cloud provider by checking for the presence of JSON files.
-    """
-    detected_provider = None
-
-    if aws_enabled:
-        print("Checking AWS JSON files...")
-        for key, path in aws_json_files.items():
-            print(f"Checking path: {path}")
-            if path and os.path.exists(path):
-                print(f"AWS JSON file found: {path}")
-                detected_provider = "aws"
-        if not detected_provider:
-            print("No AWS JSON files found.")
-
-    if gcp_enabled:
-        print("Checking GCP JSON files...")
-        for key, path in gcp_json_files.items():
-            print(f"Checking path: {path}")
-            if path and os.path.exists(path):
-                print(f"GCP JSON file found: {path}")
-                detected_provider = "gcp"
-        if not detected_provider:
-            print("No GCP JSON files found.")
-
-    if azure_enabled:
-        print("Checking Azure JSON files...")
-        for key, path in azure_json_files.items():
-            print(f"Checking path: {path}")
-            if path and os.path.exists(path):
-                print(f"Azure JSON file found: {path}")
-                detected_provider = "azure"
-        if not detected_provider:
-            print("No Azure JSON files found.")
-    
-    if not detected_provider:
-        raise ValueError("No JSON files found for any enabled cloud provider.")
-    return detected_provider
 
 def get_most_recent_directory(base_path):
     """
@@ -76,11 +45,50 @@ def get_most_recent_directory(base_path):
     latest_subdir = max(subdirs, key=os.path.getmtime)
     return latest_subdir
 
+def detect_cloud_provider(aws_json_files, gcp_json_files, azure_json_files, aws_enabled, gcp_enabled, azure_enabled):
+    """
+    Detect the cloud provider by checking for the presence of JSON files.
+    """
+    detected_provider = None
+
+    if aws_enabled:
+        for key, path in aws_json_files.items():
+            if path and os.path.exists(path):
+                detected_provider = "aws"
+                break
+
+    if not detected_provider and gcp_enabled:
+        for key, path in gcp_json_files.items():
+            if path and os.path.exists(path):
+                detected_provider = "gcp"
+                break
+
+    if not detected_provider and azure_enabled:
+        for key, path in azure_json_files.items():
+            if path and os.path.exists(path):
+                detected_provider = "azure"
+                break
+
+    if not detected_provider:
+        raise ValueError("No JSON files found for any enabled cloud provider.")
+    return detected_provider
+
 def main():
     # Configuration paths
+    aws_config_path = "aws.json"  # Path to the JSON configuration
     column_mapping_path = "config/column_mapping.json"
     base_path = "data/json/aws/"
     
+    # Load AWS JSON file mappings
+    try:
+        aws_file_mappings = load_aws_file_mapping(aws_config_path)
+    except FileNotFoundError:
+        print(f"Configuration file {aws_config_path} not found.")
+        return
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON in {aws_config_path}.")
+        return
+
     try:
         most_recent_dir = get_most_recent_directory(base_path)
         print(f"Most recent directory: {most_recent_dir}")
@@ -88,22 +96,10 @@ def main():
         print(e)
         return
     
-    # Define expected JSON files
+    # Generate file names and search for them
     aws_json_files = {
-        "ec2": "ec2-describe_instances.json",
-        "rds": "rds-describe_db_instances.json",
-        "s3": "s3-list_buckets.json",
-        "elasticache": "elasticache-describe_cache_clusters.json",
-        "kms": "kms-list_keys.json",
-        "lambda": "lambda-list_functions.json",
-        "elb": "elbv2-describe_load_balancers.json",
-        "eks": "eks-list_clusters.json"
-    }
-    
-    # Search for JSON files in subdirectories
-    aws_json_files = {
-        key: find_json_files(most_recent_dir, file_name)
-        for key, file_name in aws_json_files.items()
+        generate_file_name(entry): find_json_files(most_recent_dir, generate_file_name(entry))
+        for entry in aws_file_mappings
     }
 
     # Check if any files were found
@@ -125,7 +121,7 @@ def main():
         print(e)
         return
 
-    # Process services and collect data frames
+    # Define processors for known services
     processors = {
         "ec2": ec2_processor.process_ec2,
         "rds": rds_processor.process_rds,
@@ -140,10 +136,18 @@ def main():
     column_mapping = load_column_mapping(column_mapping_path)
 
     data_frames = []
-    for service, file_path in aws_json_files.items():
+    for file_name, file_path in aws_json_files.items():
         if file_path:
-            data = load_json(file_path)
-            data_frames.append(processors[service](data))
+            service = file_name.split("-")[0]  # Extract service from file name
+            processor = processors.get(service)
+            if processor:
+                try:
+                    data = load_json(file_path)
+                    data_frames.append(processor(data))
+                except Exception as e:
+                    print(f"Error processing service '{service}': {e}")
+            else:
+                print(f"No processor found for service '{service}'. Skipping...")
 
     # Write consolidated data to Excel
     excel_template = "data/excel/SSP-Appendix-M-Integrated-Inventory-Workbook-Template.xlsx"
