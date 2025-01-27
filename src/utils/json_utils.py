@@ -17,3 +17,11 @@ def load_json(file_path):
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON in file {file_path}: {e}")
         return []
+
+
+def load_column_mapping(file_path):
+    """
+    Load column mapping configuration from a JSON file.
+    """
+    with open(file_path, 'r') as f:
+        return json.load(f)

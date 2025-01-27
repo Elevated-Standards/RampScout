@@ -1,0 +1,307 @@
+[
+    {
+      "function": "describe_repositories",
+      "result_key": "repositories",
+      "service": "ecr",
+      "fields": [
+        "repositoryName",
+        "repositoryArn",
+        "repositoryUri",
+        "createdAt",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_instances",
+      "parameters": {
+        "Filters": [
+          {
+            "Name": "instance-state-name",
+            "Values": [
+              "running"
+            ]
+          }
+        ]
+      },
+      "result_key": "Reservations",
+      "service": "ec2",
+      "fields": [
+        "instanceId",
+        "instanceType",
+        "keyName",
+        "privateIpAddress",
+        "publicIpAddress",
+        "state.Name",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_volumes",
+      "result_key": "Volumes",
+      "service": "ec2",
+      "fields": [
+        "volumeId",
+        "size",
+        "state",
+        "createTime",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_network_interfaces",
+      "result_key": "NetworkInterfaces",
+      "service": "ec2",
+      "fields": [
+        "networkInterfaceId",
+        "privateIpAddress",
+        "subnetId",
+        "vpcId",
+        "status",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_security_groups",
+      "result_key": "SecurityGroups",
+      "service": "ec2",
+      "fields": [
+        "groupId",
+        "groupName",
+        "vpcId",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_vpcs",
+      "result_key": "Vpcs",
+      "service": "ec2",
+      "fields": [
+        "vpcId",
+        "state",
+        "cidrBlock",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_subnets",
+      "result_key": "Subnets",
+      "service": "ec2",
+      "fields": [
+        "subnetId",
+        "state",
+        "cidrBlock",
+        "vpcId",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_route_tables",
+      "result_key": "RouteTables",
+      "service": "ec2",
+      "fields": [
+        "routeTableId",
+        "vpcId",
+        "routes",
+        "associations",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_internet_gateways",
+      "result_key": "InternetGateways",
+      "service": "ec2",
+      "fields": [
+        "internetGatewayId",
+        "attachments",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_nat_gateways",
+      "result_key": "NatGateways",
+      "service": "ec2",
+      "fields": [
+        "natGatewayId",
+        "subnetId",
+        "vpcId",
+        "state",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_network_acls",
+      "result_key": "NetworkAcls",
+      "service": "ec2",
+      "fields": [
+        "networkAclId",
+        "vpcId",
+        "entries",
+        "associations",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_account_attributes",
+      "result_key": "AccountAttributes",
+      "service": "ec2",
+      "fields": [
+        "attributeName",
+        "attributeValues"
+      ]
+    },
+    {
+      "function": "describe_availability_zones",
+      "result_key": "AvailabilityZones",
+      "service": "ec2",
+      "fields": [
+        "zoneName",
+        "state",
+        "regionName",
+        "messages"
+      ]
+    },
+    {
+      "function": "describe_regions",
+      "result_key": "Regions",
+      "service": "ec2",
+      "fields": [
+        "regionName",
+        "endpoint"
+      ]
+    },
+    {
+      "function": "describe_db_instances",
+      "result_key": "DBInstances",
+      "service": "rds",
+      "fields": [
+        "dbInstanceIdentifier",
+        "dbInstanceClass",
+        "engine",
+        "endpoint",
+        "status",
+        "createdAt",
+        "vpcId",
+        "tags"
+      ]
+    },
+    {
+      "function": "list_buckets",
+      "result_key": "Buckets",
+      "service": "s3",
+      "fields": [
+        "name",
+        "creationDate",
+        "region",
+        "tags"
+      ]
+    },
+    {
+      "function": "list_clusters",
+      "result_key": "clusters",
+      "service": "eks",
+      "fields": [
+        "name",
+        "arn",
+        "status",
+        "version",
+        "vpcConfig",
+        "tags"
+      ]
+    },
+    {
+      "function": "list_clusters",
+      "result_key": "clusterArns",
+      "service": "ecs",
+      "fields": [
+        "clusterName",
+        "clusterArn",
+        "status",
+        "runningTasksCount",
+        "pendingTasksCount",
+        "tags"
+      ]
+    },
+    {
+      "function": "list_keys",
+      "result_key": "Keys",
+      "service": "kms",
+      "fields": [
+        "keyId",
+        "keyArn",
+        "creationDate",
+        "description",
+        "keyUsage",
+        "keyState",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_load_balancers",
+      "result_key": "LoadBalancers",
+      "service": "elbv2",
+      "fields": [
+        "loadBalancerName",
+        "loadBalancerArn",
+        "DNSName",
+        "scheme",
+        "vpcId",
+        "state",
+        "type",
+        "tags"
+      ]
+    },
+    {
+      "function": "list_functions",
+      "result_key": "Functions",
+      "service": "lambda",
+      "fields": [
+        "functionName",
+        "functionArn",
+        "runtime",
+        "handler",
+        "memorySize",
+        "timeout",
+        "lastModified",
+        "tags"
+      ]
+    },
+    {
+      "function": "list_tables",
+      "result_key": "TableNames",
+      "service": "dynamodb",
+      "fields": [
+        "tableName",
+        "tableArn",
+        "creationDateTime",
+        "itemCount",
+        "tableSizeBytes",
+        "tags"
+      ]
+    },
+    {
+      "function": "describe_cache_clusters",
+      "result_key": "CacheClusters",
+      "service": "elasticache",
+      "fields": [
+        "cacheClusterId",
+        "engine",
+        "cacheNodeType",
+        "numCacheNodes",
+        "status",
+        "endpoint",
+        "tags"
+      ]
+    },
+    {
+      "function": "list_containers",
+      "result_key": "ContainerList",
+      "service": "mediastore",
+      "fields": [
+        "name",
+        "arn",
+        "creationTime",
+        "status",
+        "tags"
+      ]
+    }
+  ]

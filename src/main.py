@@ -75,11 +75,11 @@ def detect_cloud_provider(aws_json_files, gcp_json_files, azure_json_files, aws_
 
 def main():
     # Configuration paths
-    aws_config_path = "aws.json"  # Path to the JSON configuration
+    aws_config_path = "config/aws.json"  # Path to the JSON configuration
     column_mapping_path = "config/column_mapping.json"
     base_path = "data/json/aws/"
     
-    # Load AWS JSON file mappings
+        # Load AWS JSON file mappings
     try:
         aws_file_mappings = load_aws_file_mapping(aws_config_path)
     except FileNotFoundError:
